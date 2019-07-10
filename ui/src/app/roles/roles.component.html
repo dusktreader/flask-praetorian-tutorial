@@ -1,0 +1,59 @@
+<div
+  class="container"
+  fxLayout="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+>
+  <div>
+    <mat-card>
+      <mat-card-title>Restricting access with roles</mat-card-title>
+      <mat-card-content>
+        This page demonstrates the use of roles to restrict access to protected
+        routes.
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div>
+    <app-login></app-login>
+  </div>
+
+  <div>
+    <app-token></app-token>
+  </div>
+
+  <div>
+    <mat-card>
+      <mat-card-title>Endpoints</mat-card-title>
+      <mat-card-content>
+        <button (click)="backendService.fire('protected')">Protected</button>
+        <button (click)="backendService.fire('protected_admin_required')">
+          Protected (Admin Required)
+        </button>
+        <button (click)="backendService.fire('protected_operator_required')">
+          Protected (Operator Accepted)
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div
+    class="container"
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutAlign="left"
+    fxLayoutGap="10px"
+  >
+    <div>
+      <app-request-viewer></app-request-viewer>
+    </div>
+
+    <div>
+      <app-response-viewer></app-response-viewer>
+    </div>
+  </div>
+
+  <div>
+    <app-message-viewer></app-message-viewer>
+  </div>
+</div>

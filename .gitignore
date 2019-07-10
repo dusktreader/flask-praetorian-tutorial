@@ -1,0 +1,14 @@
+env/*
+*egg-info/*
+.eggs/*
+*.egg
+*__pycache__*
+*.pyc
+*~
+build/*
+dist/*
+docs/build/*
+!docs/build/.gitignore
+.cache/*
+.flake8
+.pytest_cache/*

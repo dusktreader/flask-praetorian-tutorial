@@ -1,0 +1,26 @@
+version: "3.4"
+
+services:
+
+  api:
+    build:
+      context: ./api
+    volumes:
+      - ./api/src/:/app/src
+    environment:
+      APP_LOG: /logs/tutorial.log
+      FLASK_APP: src.app_factory:create_app()
+      FLASK_RUN_HOST: 0.0.0.0
+      PYTHONPATH: /app:${PYTHONPATH}
+      SQLITE_TEMP_DIR: /sqlite_temp
+    ports:
+      - 5000:5000
+
+  ui:
+    build:
+      context: ./ui
+
+  mailer:
+    image: djfarrelly/maildev
+    ports:
+      - 1080:80

@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "flask-praetorian-tutorial"
+version = "0.1.0"
+description = ""
+authors = ["Tucker Beck <tucker.beck@officeally.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+flask-praetorian = { git = "https://github.com/dusktreader/flask-praetorian.git", branch = "master" }
+flask-cors = "^3.0"
+flask-sqlalchemy = "^2.4"
+pendulum = "^2.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^3.0"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
