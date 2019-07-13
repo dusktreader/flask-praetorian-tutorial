@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     );
     const request = {
       method: 'post',
-      url: 'http://localhost:5010/login',
+      url: 'http://localhost:5000/login',
       payload: {
         username: loginValues.username,
         password: loginValues.password,
