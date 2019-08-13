@@ -45,9 +45,7 @@ export class UsersService {
 
   updateTimers() {
     const now = Date.now() / 1000.0;
-
     const token = this.currentTokenSubject.value.tokenData;
-
     const accessRemains = Math.floor(
       ((token.exp - now) * 100.0) / (token.exp - token.iat),
     );

@@ -13,6 +13,8 @@ services:
       FLASK_RUN_HOST: 0.0.0.0
       PYTHONPATH: /app:${PYTHONPATH}
       SQLITE_TEMP_DIR: /sqlite_temp
+      JWT_ACCESS_LIFESPAN: '30s'
+      JWT_REFRESH_LIFESPAN: '2m'
     ports:
       - 5000:5000
 

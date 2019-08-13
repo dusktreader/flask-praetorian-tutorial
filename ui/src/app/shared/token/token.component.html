@@ -1,6 +1,7 @@
 <mat-card *ngIf="accessRemains > 0 || refreshRemains > 0">
   <mat-card-title>Access Granted</mat-card-title>
   <mat-card-content>
+
     <div fxLayout="column" fxLayoutGap="10px">
       <mat-card>
         <mat-card-title>Token Data</mat-card-title>
@@ -11,7 +12,9 @@
           ></ngx-json-viewer>
         </mat-card-content>
       </mat-card>
+
       <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
+
         <mat-card *ngIf="accessRemains > 0">
           <mat-card-title>Access Remaining</mat-card-title>
           <mat-card-content>
@@ -21,6 +24,7 @@
             ></mat-progress-bar>
           </mat-card-content>
         </mat-card>
+
         <mat-card *ngIf="refreshRemains > 0">
           <mat-card-title>Refresh Remaining</mat-card-title>
           <mat-card-content>
@@ -30,6 +34,7 @@
             ></mat-progress-bar>
           </mat-card-content>
         </mat-card>
+
       </div>
     </div>
   </mat-card-content>
