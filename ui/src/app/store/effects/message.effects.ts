@@ -9,7 +9,7 @@ import { ApiService } from '@app/services/api.service';
 import { add, IAdd } from '@app/store/actions/message.actions';
 
 @Injectable()
-export class UserEffects {
+export class MessageEffects {
   add$ = createEffect(
     () => {
       return this.actions$.pipe(

@@ -1,12 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { humanizeDuration } from 'humanize-duration';
 
 import { Store } from '@ngrx/store';
 import { IAppState } from '@app/store/states/app.state';
+import { add as addMessage } from '@app/store/actions/message.actions';
+import { apiCall } from '@app/store/actions/api.actions';
 
-import { BackendService, Request } from '../../backend.service';
+import { Request } from '@app/models/request.model';
+
+export interface PresetLogin {
+  username: string;
+  password: string;
+  comment: string;
+}
 
 @Component({
   selector: 'app-login',
@@ -14,55 +22,68 @@ import { BackendService, Request } from '../../backend.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  presetLogins: Array<PresetLogin> = [
+    {
+      username: 'TheDude',
+      password: 'abides',
+      comment: 'basic user',
+    },
+    {
+      username: 'Walter',
+      password: 'calmerthanyouare',
+      comment: 'admin user',
+    },
+    {
+      username: 'Donnie',
+      password: 'iamthewalrus',
+      comment: 'operator user',
+    },
+    {
+      username: 'Maude',
+      password: 'andthorough',
+      comment: 'admin user',
+    },
+  ];
+  loginForm: FormGroup;
+
   constructor(
     private store: Store<IAppState>,
     private formBuilder: FormBuilder,
   ) {}
 
-  loginForm = this.formBuilder.group({
-    username: ['', Validators.required],
-    password: ['', Validators.required],
-  });
 
   ngOnInit() {
-    // this.usersService.selectedUser.subscribe(user =>
-    //   this.loginForm.patchValue({
-    //     username: user.username,
-    //     password: user.password,
-    //   }),
-    // );
+    this.loginForm = this.formBuilder.group({
+      presetSelector: [''],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+    this.loginForm.get('presetSelector').valueChanges.subscribe(
+      presetValue => this.loginForm.patchValue({
+        username: presetValue.username,
+        password: presetValue.password,
+      })
+    );
   }
 
   login() {
-    const loginValues = this.loginForm.value;
-    this.store.dispatch(
-    this.messagesService.add(
-      `Attempting to login with ${loginValues.username}:${loginValues.password}`,
-    );
-    const request = {
-      method: 'post',
-      url: 'http://localhost:5000/login',
-      payload: {
-        username: loginValues.username,
-        password: loginValues.password,
+    const { username, password } = this.loginForm.value;
+    this.store.dispatch(addMessage({
+      message: `Attempting to login with ${username}:${password}`,
+    }));
+
+    this.store.dispatch(apiCall({
+      request: {
+        method: 'post',
+        url: 'http://localhost:5000/login',
+        payload: { username, password },
       },
-    };
-
-    this.backendService.submitRequest(request).subscribe(response => {
-      if (response) {
-        this.messagesService.add(
-          `Successfully logged in ${this.loginForm.value.username}!`,
-          true,
-        );
-        this.usersService.setToken(response.body.access_token);
-      }
-    });
-  }
-
-  accessLabel(value: number | null) {
-    if (!value) {
-      value = 10;
-    }
-    return humanizeDuration(value * 1000);
+      okActioner: (response) => addMessage({
+        message: 'Completed login circuit?',
+      }),
+      failActioner: (response, err) => addMessage({
+        message: `Login blowed up: ${err}`,
+      }),
+    }));
   }
 }

@@ -10,7 +10,14 @@
         fxLayoutAlign="start"
         fxLayoutGap="10px"
       >
-        <app-user-selector></app-user-selector>
+        <mat-form-field>
+          <mat-label>Preset Logins</mat-label>
+          <mat-select formControlName="presetSelector">
+            <mat-option *ngFor='let preset of presetLogins' [value]='preset'>
+              {{ preset.username }} ({{ preset.comment }})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
         <mat-form-field>
           <input matInput placeholder="Username" formControlName="username" />
@@ -21,27 +28,6 @@
         </mat-form-field>
       </div>
     </form>
-    <div
-      fxLayout="row"
-      fx_layout.xs="column"
-      fxLayoutAlign="start"
-      fxLayoutGap="10px"
-    >
-      <mat-slider
-        thumbLabel
-        [displayWith]="accessLabel"
-        tickInterval="1000"
-        min="10"
-        max="100000"
-      ></mat-slider>
-      <mat-slider
-        thumbLabel
-        [displayWith]="refreshLabel"
-        tickInterval="1000"
-        min="10"
-        max="100000"
-      ></mat-slider>
-    </div>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button (click)="login()" [disabled]="!loginForm.valid">

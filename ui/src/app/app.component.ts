@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 
-import { SectionNameService } from './section-name.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +12,6 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private sectionNameService: SectionNameService,
   ) {}
   ngOnInit() {
     this.router.events
@@ -29,7 +27,7 @@ export class AppComponent implements OnInit {
         }),
       )
       .subscribe((name: string) => {
-        this.sectionNameService.setSectionName(name);
+        console.log('Router event subscription');
       });
   }
 }

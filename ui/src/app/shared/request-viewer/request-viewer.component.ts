@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
-import { BackendService } from '../../backend.service';
+import { Request } from '@app/models/request.model';
+import { IAppState } from '@app/store/states/app.state';
+import { selectRequest } from '@app/store/selectors/api.selector';
 
 @Component({
   selector: 'app-request-viewer',
@@ -9,11 +13,13 @@ import { BackendService } from '../../backend.service';
 })
 export class RequestViewerComponent implements OnInit {
 
-  constructor(private backendService: BackendService) {}
+  private request$: Observable<Request>;
 
-  requestData = {};
+  constructor(private store: Store<IAppState>) {}
 
   ngOnInit() {
-    this.backendService.requestData.subscribe(data => this.requestData = data);
+    this.request$ = this.store.pipe(
+      select(selectRequest),
+    );
   }
 }

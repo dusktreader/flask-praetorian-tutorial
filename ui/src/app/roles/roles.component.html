@@ -26,13 +26,9 @@
     <mat-card>
       <mat-card-title>Endpoints</mat-card-title>
       <mat-card-content>
-        <button (click)="backendService.fire('protected')">Protected</button>
-        <button (click)="backendService.fire('protected_admin_required')">
-          Protected (Admin Required)
-        </button>
-        <button (click)="backendService.fire('protected_operator_required')">
-          Protected (Operator Accepted)
-        </button>
+        <button>Protected</button>
+        <button>Protected (Admin Required)</button>
+        <button>Protected (Operator Accepted)</button>
       </mat-card-content>
     </mat-card>
   </div>
@@ -49,7 +45,8 @@
     </div>
 
     <div>
-      <app-response-viewer></app-response-viewer>
+      --response-viewer-here--
+      <!--<app-response-viewer></app-response-viewer>-->
     </div>
   </div>
 

@@ -17,21 +17,15 @@ import {
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
 
 import { RequestViewerComponent } from './request-viewer/request-viewer.component';
-import { ResponseViewerComponent } from './response-viewer/response-viewer.component';
 import { LoginComponent } from './login/login.component';
-import { UserSelectorComponent } from './login/user-selector/user-selector.component';
 import { MessageViewerComponent } from './message-viewer/message-viewer.component';
-import { SectionNameComponent } from './section-name/section-name.component';
 import { TokenComponent } from './token/token.component';
 
 @NgModule({
   declarations: [
     RequestViewerComponent,
-    ResponseViewerComponent,
     LoginComponent,
-    UserSelectorComponent,
     MessageViewerComponent,
-    SectionNameComponent,
     TokenComponent,
   ],
   imports: [
@@ -51,7 +45,6 @@ import { TokenComponent } from './token/token.component';
   ],
   exports: [
     RequestViewerComponent,
-    ResponseViewerComponent,
     MessageViewerComponent,
     LoginComponent,
     TokenComponent,

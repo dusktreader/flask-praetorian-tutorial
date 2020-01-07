@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MessagesService } from '../../messages.service';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
+import { IAppState } from '@app/store/states/app.state';
+import { selectMessages } from '@app/store/selectors/message.selector';
 
 @Component({
   selector: 'app-message-viewer',
@@ -7,12 +11,12 @@ import { MessagesService } from '../../messages.service';
   styleUrls: ['./message-viewer.component.scss'],
 })
 export class MessageViewerComponent implements OnInit {
-  messages: string[] = [];
-  constructor(public messagesService: MessagesService) {}
+  messages$: Observable<string[]>;
+  constructor(private store: Store<IAppState>) {}
 
   ngOnInit() {
-    this.messagesService
-      .getMessages()
-      .subscribe(messages => (this.messages = messages));
+    this.messages$ = this.store.pipe(
+      select(selectMessages),
+    );
   }
 }
