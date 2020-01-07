@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { humanizeDuration } from 'humanize-duration';
 
-import { UsersService, User } from '../../users.service';
+import { Store } from '@ngrx/store';
+import { IAppState } from '@app/store/states/app.state';
+
 import { BackendService, Request } from '../../backend.service';
-import { MessagesService } from '../../messages.service';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +15,7 @@ import { MessagesService } from '../../messages.service';
 })
 export class LoginComponent implements OnInit {
   constructor(
-    private usersService: UsersService,
-    private backendService: BackendService,
-    private messagesService: MessagesService,
+    private store: Store<IAppState>,
     private formBuilder: FormBuilder,
   ) {}
 
@@ -25,16 +25,17 @@ export class LoginComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.usersService.selectedUser.subscribe(user =>
-      this.loginForm.patchValue({
-        username: user.username,
-        password: user.password,
-      }),
-    );
+    // this.usersService.selectedUser.subscribe(user =>
+    //   this.loginForm.patchValue({
+    //     username: user.username,
+    //     password: user.password,
+    //   }),
+    // );
   }
 
   login() {
     const loginValues = this.loginForm.value;
+    this.store.dispatch(
     this.messagesService.add(
       `Attempting to login with ${loginValues.username}:${loginValues.password}`,
     );
@@ -56,5 +57,12 @@ export class LoginComponent implements OnInit {
         this.usersService.setToken(response.body.access_token);
       }
     });
+  }
+
+  accessLabel(value: number | null) {
+    if (!value) {
+      value = 10;
+    }
+    return humanizeDuration(value * 1000);
   }
 }
