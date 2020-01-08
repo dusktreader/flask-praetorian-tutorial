@@ -1,5 +1,7 @@
+import { Message } from '@app/models/message.model';
+
 export interface IState {
-  messages: Array<string>;
+  messages: Array<Message>;
 }
 
 export const initialState: IState = {

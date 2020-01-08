@@ -1,6 +1,6 @@
-<mat-card>
-  <mat-card-title>Messages</mat-card-title>
-  <mat-card-content>
-    <p *ngFor="let message of messages$ | async">{{ message }}</p>
-  </mat-card-content>
-</mat-card>
+<mat-list>
+  <mat-list-item *ngFor="let message of messages$ | async">
+    <i>{{ message.timestamp.format('HH:mm:ss') }}</i>
+    <p class="message-text">{{ message.text }}</p>
+  </mat-list-item>
+</mat-list>

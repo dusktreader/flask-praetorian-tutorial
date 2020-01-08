@@ -26,6 +26,8 @@ import {
   MatSidenavModule,
   MatSnackBarModule,
   MatToolbarModule,
+  MatTabsModule,
+  MatExpansionModule,
 } from '@angular/material';
 
 import { SharedModule } from './shared/shared.module';
@@ -62,6 +64,8 @@ import { AuthEffects } from '@app/store/effects/auth.effects';
     MatSidenavModule,
     MatSnackBarModule,
     MatToolbarModule,
+    MatTabsModule,
+    MatExpansionModule,
     ReactiveFormsModule,
     SharedModule,
     StoreModule.forRoot({

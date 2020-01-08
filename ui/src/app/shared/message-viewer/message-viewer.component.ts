@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { IAppState } from '@app/store/states/app.state';
 import { selectMessages } from '@app/store/selectors/message.selector';
+import { Message } from '@app/models/message.model';
 
 @Component({
   selector: 'app-message-viewer',
@@ -11,7 +12,7 @@ import { selectMessages } from '@app/store/selectors/message.selector';
   styleUrls: ['./message-viewer.component.scss'],
 })
 export class MessageViewerComponent implements OnInit {
-  messages$: Observable<string[]>;
+  messages$: Observable<Message[]>;
   constructor(private store: Store<IAppState>) {}
 
   ngOnInit() {
