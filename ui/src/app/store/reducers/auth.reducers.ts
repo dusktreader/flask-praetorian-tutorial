@@ -9,6 +9,10 @@ export function reducer(state: IState | undefined, action: Action) {
     on(signInOk, (previousState, { payload }) => ({
       ...previousState,
       token: payload.token,
+      username: payload.username,
     })),
+
+    on(signOut, (previousState) => initialState),
+
   )(state, action);
 }

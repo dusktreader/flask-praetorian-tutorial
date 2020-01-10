@@ -46,7 +46,7 @@ export class ApiEffects {
       ofType(apiCallOk),
       map(action => action.payload),
       switchMap(payload => ([
-        payload.okActioner(payload.response),
+        ...payload.okActioners(payload.response),
         addMessage({ message: `Success Response: ${payload.response}` }),
       ])),
     );
@@ -57,7 +57,7 @@ export class ApiEffects {
       ofType(apiCallFail),
       map(action => action.payload),
       switchMap(payload => ([
-        payload.failActioner(payload.response, payload.failError),
+        ...payload.failActioners(payload.response, payload.failError),
         addMessage({ message: `Fail Response: ${payload.response}` }),
       ])),
     );

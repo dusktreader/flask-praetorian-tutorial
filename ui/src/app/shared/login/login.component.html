@@ -1,39 +1,61 @@
-<form [formGroup]="loginForm" (ngSubmit)="login()">
-  <div
-    fxLayout="row"
-    fxLayout.xs="column"
-    fxLayoutAlign="start"
-    fxLayoutGap="10px"
-  >
-    <mat-form-field>
-      <mat-label>Preset Logins</mat-label>
-      <mat-select formControlName="presetSelector">
-        <mat-option *ngFor='let preset of presetLogins' [value]='preset'>
-          {{ preset.username }} ({{ preset.comment }})
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+<mat-expansion-panel #panel hideToggle>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ titleString$ | async }}
+    </mat-panel-title>
+    <mat-panel-description>
+      <div *ngIf="username$ | async">
+        Put the timer text here
+      </div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
 
-    <mat-form-field>
-      <input matInput placeholder="Username" formControlName="username" />
-    </mat-form-field>
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <div
+      fxLayout="row"
+      fxLayout.xs="column"
+      fxLayoutAlign="start"
+      fxLayoutGap="10px"
+    >
+      <mat-form-field>
+        <mat-label>Preset Logins</mat-label>
+        <mat-select formControlName="presetSelector">
+          <mat-option *ngFor='let preset of presetLogins' [value]='preset'>
+            {{ preset.username }} ({{ preset.comment }})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="Password" formControlName="password" />
-    </mat-form-field>
-  </div>
-</form>
-<div
-  fxLayout="row"
-  fxLayoutAlign="end"
->
-  <button
-    mat-raised-button
-    color="primary"
-    fxLayoutAlign="end"
-    (click)="login()"
-    [disabled]="!loginForm.valid"
-  >
-    Sign In
-  </button>
-</div>
+      <mat-form-field>
+        <input matInput placeholder="Username" formControlName="username" />
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Password" formControlName="password" />
+      </mat-form-field>
+    </div>
+  </form>
+
+  <mat-action-row>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="login()"
+      [disabled]="!loginForm.valid"
+    >
+      <mat-icon>input</mat-icon>
+      Sign In
+    </button>
+
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="logout()"
+      [disabled]="!(token$ | async)"
+    >
+      <mat-icon>cancel</mat-icon>
+      Sign Out
+    </button>
+  </mat-action-row>
+
+</mat-expansion-panel>

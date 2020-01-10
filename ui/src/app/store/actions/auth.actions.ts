@@ -4,7 +4,7 @@ export const TSignIn = '[Auth] Sign In';
 export interface ISignIn {
   username: string;
   password: string;
-  token: string;
+  token?: string;
 }
 export const signIn = createAction(TSignIn, (payload: ISignIn) => ({
   payload,

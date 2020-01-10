@@ -1,12 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { MatExpansionPanel } from '@angular/material';
+import { Observable } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
 import { humanizeDuration } from 'humanize-duration';
 
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { IAppState } from '@app/store/states/app.state';
 import { add as addMessage } from '@app/store/actions/message.actions';
-import { apiCall } from '@app/store/actions/api.actions';
+import { signIn, signOut } from '@app/store/actions/auth.actions';
+import { selectToken, selectUsername } from '@app/store/selectors/auth.selector';
 
 import { Request } from '@app/models/request.model';
 
@@ -22,6 +26,10 @@ export interface PresetLogin {
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  @ViewChild('panel', {static: false}) Panel: MatExpansionPanel;
+  token$: Observable<string>;
+  titleString$: Observable<string>;
+  username$: Observable<string>;
   presetLogins: Array<PresetLogin> = [
     {
       username: 'TheDude',
@@ -64,6 +72,16 @@ export class LoginComponent implements OnInit {
         password: presetValue.password,
       })
     );
+    this.token$ = this.store.pipe(select(selectToken));
+    this.token$.pipe(
+      filter(token => !!token && !!this.Panel),
+    ).subscribe(token => {
+      this.Panel.close();
+    });
+    this.username$ = this.store.pipe(select(selectUsername));
+    this.titleString$ = this.username$.pipe(
+      map( username => username ? `Signed in as ${username}` : 'Sign In'),
+    );
   }
 
   login() {
@@ -72,18 +90,23 @@ export class LoginComponent implements OnInit {
       message: `Attempting to login with ${username}:${password}`,
     }));
 
-    this.store.dispatch(apiCall({
-      request: {
-        method: 'post',
-        url: 'http://localhost:5000/login',
-        payload: { username, password },
-      },
-      okActioner: (response) => addMessage({
-        message: 'Completed login circuit?',
-      }),
-      failActioner: (response, err) => addMessage({
-        message: `Login blowed up: ${err}`,
-      }),
+    this.store.dispatch(signIn({ username, password }));
+  }
+
+  logout() {
+    this.store.dispatch(addMessage({
+      message: 'Logging Out',
     }));
+
+    this.store.dispatch(signOut());
+    this.loginForm.setValue(
+      {
+        presetSelector: '',
+        username: '',
+        password: '',
+      },
+      { emitEvent: false }
+    );
+    this.Panel.close();
   }
 }

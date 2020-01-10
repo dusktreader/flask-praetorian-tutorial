@@ -37,19 +37,7 @@
       <span>{{ sectionName }}</span>
     </mat-toolbar>
     <!-- Add Content Here -->
-    <mat-accordion #accordion="matAccordion">
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Logged in User
-          </mat-panel-title>
-          <mat-panel-description>
-            User Name (blah)
-          </mat-panel-description>
-        </mat-expansion-panel-header>
-        <app-login></app-login>
-      </mat-expansion-panel>
-    </mat-accordion>
+    <app-login></app-login>
     <router-outlet></router-outlet>
     <mat-tab-group>
       <mat-tab label="Messages">

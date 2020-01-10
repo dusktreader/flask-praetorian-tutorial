@@ -12,6 +12,7 @@ import {
   MatProgressBarModule,
   MatSelectModule,
   MatSliderModule,
+  MatExpansionModule,
 } from '@angular/material';
 
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
@@ -40,6 +41,7 @@ import { TokenComponent } from './token/token.component';
     MatProgressBarModule,
     MatSelectModule,
     MatSliderModule,
+    MatExpansionModule,
     NgxJsonViewerModule,
     ReactiveFormsModule,
   ],

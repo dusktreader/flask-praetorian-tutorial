@@ -6,8 +6,8 @@ import { Response } from '@app/models/response.model';
 export interface IApiCall {
   request: Request;
   response?: Response;
-  okActioner: (Response) => Action;
-  failActioner: (Response, Error) => Action;
+  okActioners: (Response) => Array<Action>;
+  failActioners: (Response, Error) => Array<Action>;
   failError?: Error;
 }
 
