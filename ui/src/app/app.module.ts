@@ -28,6 +28,7 @@ import {
   MatToolbarModule,
   MatTabsModule,
   MatExpansionModule,
+  MatGridListModule,
 } from '@angular/material';
 
 import { SharedModule } from './shared/shared.module';
@@ -35,10 +36,12 @@ import { SharedModule } from './shared/shared.module';
 import { reducer as apiReducer } from '@app/store/reducers/api.reducers';
 import { reducer as messageReducer } from '@app/store/reducers/message.reducers';
 import { reducer as authReducer } from '@app/store/reducers/auth.reducers';
+import { reducer as timerReducer } from '@app/store/reducers/timer.reducers';
 
 import { ApiEffects } from '@app/store/effects/api.effects';
 import { MessageEffects } from '@app/store/effects/message.effects';
 import { AuthEffects } from '@app/store/effects/auth.effects';
+import { TimerEffects } from '@app/store/effects/timer.effects';
 
 
 @NgModule({
@@ -66,17 +69,20 @@ import { AuthEffects } from '@app/store/effects/auth.effects';
     MatToolbarModule,
     MatTabsModule,
     MatExpansionModule,
+    MatGridListModule,
     ReactiveFormsModule,
     SharedModule,
     StoreModule.forRoot({
       api: apiReducer,
       message: messageReducer,
       auth: authReducer,
+      timer: timerReducer,
     }),
     EffectsModule.forRoot([
       ApiEffects,
       MessageEffects,
       AuthEffects,
+      TimerEffects,
     ]),
   ],
   providers: [Title],

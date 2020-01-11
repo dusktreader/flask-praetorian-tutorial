@@ -5,28 +5,12 @@
   fxLayoutGap="10px"
 >
   <div>
-    <mat-card>
-      <mat-card-title>Restricting access with roles</mat-card-title>
-      <mat-card-content>
-        This page demonstrates the use of roles to restrict access to protected
-        routes.
-      </mat-card-content>
-    </mat-card>
-  </div>
+    <h2>Restricting access with roles</h2>
+    <p>
+      This page demonstrates the use of roles to restrict access to protected
+      routes.
+    </p>
 
-
-  <div>
-    <app-token></app-token>
-  </div>
-
-  <div>
-    <mat-card>
-      <mat-card-title>Endpoints</mat-card-title>
-      <mat-card-content>
-        <button>Protected</button>
-        <button>Protected (Admin Required)</button>
-        <button>Protected (Operator Accepted)</button>
-      </mat-card-content>
-    </mat-card>
+    <app-endpoint-list [endpoints]="endpoints"></app-endpoint-list>
   </div>
 </div>

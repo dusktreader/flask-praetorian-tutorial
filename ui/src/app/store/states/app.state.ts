@@ -10,15 +10,21 @@ import {
   IState as IMessageState,
   initialState as initialMessageState,
 } from './message.state';
+import {
+  IState as ITimerState,
+  initialState as initialTimerState,
+} from './timer.state';
 
 export interface IAppState {
   api?: IApiState;
   auth?: IAuthState;
   message?: IMessageState;
+  timer?: ITimerState;
 }
 
 export const initialAppState: IAppState = {
   api: initialApiState,
   auth: initialAuthState,
   message: initialMessageState,
+  timer: initialTimerState,
 };

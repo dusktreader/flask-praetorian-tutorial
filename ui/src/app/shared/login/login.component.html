@@ -4,8 +4,19 @@
       {{ titleString$ | async }}
     </mat-panel-title>
     <mat-panel-description>
-      <div *ngIf="username$ | async">
-        Put the timer text here
+      <div
+        fxLayout="row"
+        fxLaoutAlign="center"
+        fxLayoutGap="10px"
+      >
+        <div *ngIf="username$ | async">
+          Access Remaining: {{ accessRemainsHuman$ | async }}
+          <mat-progress-bar mode="determinate" [value]="accessRemainsPct$ | async"></mat-progress-bar>
+        </div>
+        <div *ngIf="username$ | async">
+          Refresh Remaining: {{ refreshRemainsHuman$ | async }}
+          <mat-progress-bar mode="determinate" [value]="refreshRemainsPct$ | async"></mat-progress-bar>
+        </div>
       </div>
     </mat-panel-description>
   </mat-expansion-panel-header>

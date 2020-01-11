@@ -4,13 +4,23 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatExpansionPanel } from '@angular/material';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
-import { humanizeDuration } from 'humanize-duration';
+import * as moment from 'moment';
 
 import { Store, select } from '@ngrx/store';
 import { IAppState } from '@app/store/states/app.state';
 import { add as addMessage } from '@app/store/actions/message.actions';
 import { signIn, signOut } from '@app/store/actions/auth.actions';
 import { selectToken, selectUsername } from '@app/store/selectors/auth.selector';
+import {
+  selectAccessRemaining,
+  selectAccessRemainingPct,
+  selectAccessRemainingHuman,
+} from '@app/store/selectors/timer.selector';
+import {
+  selectRefreshRemaining,
+  selectRefreshRemainingPct,
+  selectRefreshRemainingHuman,
+} from '@app/store/selectors/timer.selector';
 
 import { Request } from '@app/models/request.model';
 
@@ -30,6 +40,14 @@ export class LoginComponent implements OnInit {
   token$: Observable<string>;
   titleString$: Observable<string>;
   username$: Observable<string>;
+
+  accessRemains$: Observable<number>;
+  accessRemainsHuman$: Observable<string>;
+  accessRemainsPct$: Observable<number>;
+
+  refreshRemainsHuman$: Observable<string>;
+  refreshRemainsPct$: Observable<number>;
+
   presetLogins: Array<PresetLogin> = [
     {
       username: 'TheDude',
@@ -82,6 +100,13 @@ export class LoginComponent implements OnInit {
     this.titleString$ = this.username$.pipe(
       map( username => username ? `Signed in as ${username}` : 'Sign In'),
     );
+
+    this.accessRemains$ = this.store.pipe(select(selectAccessRemaining));
+    this.accessRemainsHuman$ = this.store.pipe(select(selectAccessRemainingHuman));
+    this.accessRemainsPct$ = this.store.pipe(select(selectAccessRemainingPct));
+
+    this.refreshRemainsHuman$ = this.store.pipe(select(selectRefreshRemainingHuman));
+    this.refreshRemainsPct$ = this.store.pipe(select(selectRefreshRemainingPct));
   }
 
   login() {

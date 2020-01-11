@@ -36,19 +36,23 @@
       </button>
       <span>{{ sectionName }}</span>
     </mat-toolbar>
-    <!-- Add Content Here -->
+
     <app-login></app-login>
     <router-outlet></router-outlet>
     <mat-tab-group>
       <mat-tab label="Messages">
         <app-message-viewer></app-message-viewer>
       </mat-tab>
+      <mat-tab label="JWT Token">
+        <app-token-viewer></app-token-viewer>
+      </mat-tab>
       <mat-tab label="Request">
         <app-request-viewer></app-request-viewer>
       </mat-tab>
-      <!--<mat-tab label="Response">
+      <mat-tab label="Response">
         <app-response-viewer></app-response-viewer>
-      </mat-tab>-->
+      </mat-tab>
     </mat-tab-group>
+
   </mat-sidenav-content>
 </mat-sidenav-container>

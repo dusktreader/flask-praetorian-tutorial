@@ -1,0 +1,26 @@
+<mat-list>
+  <h3 mat-subheader>Endpoints</h3>
+  <div *ngFor="endpoint of endpoints; last as isLast">
+    <mat-list-item>
+      <div
+        class="container"
+        fxFlex
+        fxLayout="row"
+        fxLayoutAlign="start center"
+        fxLayoutGap="20px"
+        >
+        <button
+          mat-raised-button
+          (click)="onFire(endpoint.route)"
+          >
+          <mat-icon>{{ endpoint.icon }}</mat-icon>
+        </button>
+        <span>
+          <b>{{ endpoint.label }}:</b>
+          {{ endpoint.description }}
+        </span>
+      </div>
+    </mat-list-item>
+    <mat-divider *ngIf="isLast"></mat-divider>
+  </div>
+</mat-list>

@@ -9,3 +9,8 @@ export const selectRequest = createSelector(
   selectFeature,
   (state: IApiState) => state.request,
 );
+
+export const selectResponse = createSelector(
+  selectFeature,
+  (state: IApiState) => state.response,
+);
