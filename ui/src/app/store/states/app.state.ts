@@ -14,12 +14,17 @@ import {
   IState as ITimerState,
   initialState as initialTimerState,
 } from './timer.state';
+import {
+  IState as IEndpointIndicatorState,
+  initialState as initialEndpointIndicatorState,
+} from './timer.state';
 
 export interface IAppState {
   api?: IApiState;
   auth?: IAuthState;
   message?: IMessageState;
   timer?: ITimerState;
+  endpointIndicator?: IEndpointIndicatorState;
 }
 
 export const initialAppState: IAppState = {
@@ -27,4 +32,5 @@ export const initialAppState: IAppState = {
   auth: initialAuthState,
   message: initialMessageState,
   timer: initialTimerState,
+  endpointIndicator: initialEndpointIndicatorState,
 };

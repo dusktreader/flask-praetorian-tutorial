@@ -3,5 +3,4 @@ export interface IEndpoint {
   icon: string;
   label: string;
   description: any;
-  route: string;
 }

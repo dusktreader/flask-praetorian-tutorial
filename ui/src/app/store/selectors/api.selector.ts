@@ -7,10 +7,10 @@ export const selectFeature = createFeatureSelector<IAppState, IApiState>('api');
 
 export const selectRequest = createSelector(
   selectFeature,
-  (state: IApiState) => state.request,
+  (state: IApiState) => state.request ? state.request : {},
 );
 
 export const selectResponse = createSelector(
   selectFeature,
-  (state: IApiState) => state.response,
+  (state: IApiState) => state.response ? state.response : {},
 );
