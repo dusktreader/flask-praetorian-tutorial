@@ -14,6 +14,7 @@ import {
   MatSliderModule,
   MatExpansionModule,
   MatGridListModule,
+  MatBadgeModule,
 } from '@angular/material';
 
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
@@ -48,6 +49,7 @@ import { EndpointListComponent } from './endpoint-list/endpoint-list.component';
     MatSliderModule,
     MatExpansionModule,
     MatGridListModule,
+    MatBadgeModule,
     NgxJsonViewerModule,
     ReactiveFormsModule,
   ],

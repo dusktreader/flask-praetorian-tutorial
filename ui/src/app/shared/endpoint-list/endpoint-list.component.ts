@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { IEndpoint } from '@app/models/endpoint.model';
 import { IAppState } from '@app/store/states/app.state';
@@ -13,6 +14,12 @@ import {
 import { selectRequest } from '@app/store/selectors/api.selector';
 import { selectStatus } from '@app/store/selectors/endpoint-indicator.selector';
 
+interface EndpointStatus {
+  endpoint: IEndpoint;
+  selector: Observable<EStatus>;
+  color: Observable<string>;
+}
+
 @Component({
   selector: 'app-endpoint-list',
   templateUrl: './endpoint-list.component.html',
@@ -24,22 +31,36 @@ export class EndpointListComponent implements OnInit {
   @Input() name: string;
   @Output() fire = new EventEmitter<string>();
 
-  statuses: any;
+  endpointStatuses: Array<EndpointStatus>;
 
   constructor(private store: Store<IAppState>) {}
 
   ngOnInit() {
-    this.statuses = {};
-    this.endpoints.forEach(ep => {
-      this.statuses[ep.name] = this.store.pipe(select(selectStatus, ({
-        endpointName: ep.name,
-        endpointListName: this.name,
-      })));
-    });
+    this.endpointStatuses = this.endpoints.map(ep => ({
+      endpoint: ep,
+      selector: this.store.pipe(select(selectStatus, ({ endpointKey: this.getKey(ep) }))),
+      color: this.store.pipe(
+        select(selectStatus, ({ endpointKey: this.getKey(ep) })),
+        map(status => {
+          if (status === EStatus.started) {
+            return 'primary';
+          } else if (status === EStatus.success) {
+            return 'accent';
+          } else {
+            return 'warn';
+          }
+        }),
+      ),
+    }));
   }
 
-  onFire(endpointName: string) {
-    this.store.dispatch(endpointIndicator({ endpointListName: this.name, endpointName }));
-    this.fire.emit(name);
+  getKey(endpoint: IEndpoint) {
+    return `${this.name}-${endpoint.name}`;
+  }
+
+  onFire(endpoint: IEndpoint) {
+    const endpointKey = this.getKey(endpoint);
+    this.store.dispatch(endpointIndicator({ endpointKey }));
+    this.fire.emit(endpointKey);
   }
 }

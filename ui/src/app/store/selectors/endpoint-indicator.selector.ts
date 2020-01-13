@@ -8,11 +8,7 @@ export const selectFeature = createFeatureSelector<IAppState, IState>('endpointI
 export const selectStatus = createSelector(
   selectFeature,
   (state: IState, props: any) => {
-    if (
-      state.endpointListName ===  props.endpointListName
-      && state.endpointName === props.endpointName
-      && state.status
-    ) {
+    if (state.endpointKey ===  props.endpointKey && state.status) {
       return state.status;
     } else {
       return null;

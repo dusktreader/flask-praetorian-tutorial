@@ -1,5 +1,4 @@
-import { createReducer, on, State, Action } from '@ngrx/store';
-import {
+import { createReducer, on, State, Action } from '@ngrx/store'; import {
   endpointIndicator,
   endpointIndicatorSuccess,
   endpointIndicatorFail,
@@ -13,22 +12,19 @@ export function reducer(state: IState | undefined, action: Action) {
     on(endpointIndicator, (previousState, { payload }) => ({
       ...previousState,
       status: EStatus.started,
-      endpointListName: payload.endpointListName,
-      endpointName: payload.endpointName,
+      endpointKey: payload.endpointKey,
     })),
 
     on(endpointIndicatorSuccess, (previousState, { payload }) => ({
       ...previousState,
       status: EStatus.success,
-      endpointListName: payload.endpointListName,
-      endpointName: payload.endpointName,
+      endpointKey: payload.endpointKey,
     })),
 
     on(endpointIndicatorFail, (previousState, { payload }) => ({
       ...previousState,
       status: EStatus.fail,
-      endpointListName: payload.endpointListName,
-      endpointName: payload.endpointName,
+      endpointKey: payload.endpointKey,
     })),
 
   )(state, action);

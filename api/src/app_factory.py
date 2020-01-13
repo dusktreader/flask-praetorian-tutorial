@@ -20,7 +20,6 @@ def create_app(*args, **kwargs):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SECRET_KEY'] = 'top secret'
     fetch_env(app, 'SQLITE_TEMP_DIR', default=os.getcwd())
-    app.logger.debug("SQLITE TEMP DIR: {}".format(app.config['SQLITE_TEMP_DIR']))
     fetch_env(app, 'JWT_ACCESS_LIFESPAN', default=pendulum.duration(hours=24))
     fetch_env(app, 'JWT_REFRESH_LIFESPAN', default=pendulum.duration(days=30))
     fetch_env(app, 'PRAETORIAN_CONFIRMATION_SENDER')
@@ -64,71 +63,3 @@ def create_app(*args, **kwargs):
     register_routes(app)
 
     return app
-
-
-
-
-"""
-  roles:
-    build: *build_template
-    volumes: *volumes_template
-    environment:
-      <<: *environment_template
-      EXAMPLE: resources.roles
-      JWT_ACCESS_LIFESPAN: 30s
-      JWT_REFRESH_LIFESPAN: 2m
-    ports:
-      - 5010:5000
-    depends_on: *depends_on_template
-
-  refresh:
-    build: *build_template
-    volumes: *volumes_template
-    environment:
-      <<: *environment_template
-      JWT_ACCESS_LIFESPAN: 30s
-      JWT_REFRESH_LIFESPAN: 2m
-      EXAMPLE: resources.refresh
-    ports:
-      - 5020:5000
-    depends_on: *depends_on_template
-
-  blacklist:
-    build: *build_template
-    volumes: *volumes_template
-    environment:
-      <<: *environment_template
-      JWT_ACCESS_LIFESPAN: 10000d
-      JWT_REFRESH_LIFESPAN: 10000d
-      EXAMPLE: resources.blacklist
-    ports:
-      - 5030:5000
-    depends_on: *depends_on_template
-
-  custom:
-    build: *build_template
-    volumes: *volumes_template
-    environment:
-      <<: *environment_template
-      EXAMPLE: resources.custom
-    ports:
-      - 5040:5000
-    depends_on: *depends_on_template
-
-  register:
-    build: *build_template
-    volumes: *volumes_template
-    environment:
-      <<: *environment_template
-      JWT_ACCESS_LIFESPAN: 5m
-      JWT_REFRESH_LIFESPAN: 1h
-      PRAETORIAN_CONFIRMATION_SENDER: confirmation.sender@praetorian.com
-      PRAETORIAN_CONFIRMATION_SUBJECT: confirmation for praetorian regristration example
-      PRAETORIAN_CONFIRMATION_URI: 'http://localhost:5000/finalize'
-      MAIL_SERVER: mailer
-      MAIL_PORT: 25
-      EXAMPLE: resources.register
-    ports:
-      - 5050:5000
-    depends_on: *depends_on_template
-"""

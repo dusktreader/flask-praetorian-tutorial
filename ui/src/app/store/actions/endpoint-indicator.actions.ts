@@ -1,8 +1,7 @@
 import { createAction, Action } from '@ngrx/store';
 
 export interface IEndpointIndicator {
-  endpointListName: string;
-  endpointName: string;
+  endpointKey: string;
 }
 
 export const TEndpointIndicator = '[EndpointIndicator] Go';
@@ -10,10 +9,12 @@ export const endpointIndicator = createAction(TEndpointIndicator, (payload: IEnd
   payload,
 }));
 
-export const endpointIndicatorSuccess = createAction(TEndpointIndicator, (payload: IEndpointIndicator) => ({
+export const TEndpointIndicatorSuccess = '[EndpointIndicator] Success';
+export const endpointIndicatorSuccess = createAction(TEndpointIndicatorSuccess, (payload: IEndpointIndicator) => ({
   payload,
 }));
 
-export const endpointIndicatorFail = createAction(TEndpointIndicator, (payload: IEndpointIndicator) => ({
+export const TEndpointIndicatorFail = '[EndpointIndicator] Fail';
+export const endpointIndicatorFail = createAction(TEndpointIndicatorFail, (payload: IEndpointIndicator) => ({
   payload,
 }));

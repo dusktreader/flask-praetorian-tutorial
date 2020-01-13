@@ -19,6 +19,9 @@ export class MessageEffects {
             this.snackBar.open(action.payload.message, 'x', { duration: 3000 });
           }
           console.log(action.payload.message);
+          if (action.payload.consoleData) {
+            console.log('Additional data: ', action.payload.consoleData);
+          }
         }),
       );
     },

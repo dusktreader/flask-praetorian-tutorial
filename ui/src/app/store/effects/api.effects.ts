@@ -23,7 +23,10 @@ export class ApiEffects {
       map(action => action.payload),
       switchMap(payload => ([
         apiCallStart(payload),
-        addMessage({ message: `Submitting Request: ${payload.request}` }),
+        addMessage({
+          message: 'Submitting Request',
+          consoleData: payload.request
+        }),
       ])),
     );
   });
@@ -34,7 +37,9 @@ export class ApiEffects {
       map(action => action.payload),
       mergeMap(payload =>
         this.apiService.submitRequest(payload.request).pipe(
-          map(resp => apiCallOk({ ...payload, response: resp })),
+          map(resp => {
+            return apiCallOk({ ...payload, response: resp });
+          }),
           catchError(err => of(apiCallFail({ ...payload, failError: err }))),
           ),
         ),

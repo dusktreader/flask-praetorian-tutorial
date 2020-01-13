@@ -1,12 +1,11 @@
 export enum EStatus {
-  started,
-  success,
-  fail,
+  started = '-',
+  success = 'ok',
+  fail = 'x',
 }
 
 export interface IState {
-  endpointListName?: string;
-  endpointName?: string;
+  endpointKey?: string;
   status?: EStatus;
 }
 

@@ -1,6 +1,6 @@
 <mat-list>
   <h3 mat-subheader>Endpoints</h3>
-  <div *ngFor="let endpoint of endpoints; last as isLast">
+  <div *ngFor="let es of endpointStatuses; last as isLast">
     <mat-list-item>
       <div
         class="container"
@@ -11,13 +11,13 @@
         >
         <button
           mat-raised-button
-          (click)="onFire(endpoint.name)"
+          (click)="onFire(es.endpoint)"
           >
-          <mat-icon>{{ endpoint.icon }}</mat-icon>
+          <mat-icon [matBadge]="es.selector | async">{{ es.endpoint.icon }}</mat-icon>
         </button>
         <span>
-          <b>{{ endpoint.label }}:</b>
-          {{ endpoint.description }}
+          <b>{{ es.endpoint.label }}:</b>
+          {{ es.endpoint.description }}
         </span>
       </div>
     </mat-list-item>

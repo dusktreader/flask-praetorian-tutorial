@@ -10,11 +10,11 @@ import {
 
 @Injectable()
 export class TimerEffects {
-  tick$ = createEffect(() => {
-    return interval(1000).pipe(
-      map(() => tick())
-    );
-  });
+  // tick$ = createEffect(() => {
+  //   return interval(1000).pipe(
+  //     map(() => tick())
+  //   );
+  // });
 
   constructor() {}
 }
