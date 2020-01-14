@@ -35,7 +35,7 @@ export class RolesComponent implements OnInit {
         description: 'This endpoint may only be accessed by users with the "admin" role',
       },
       {
-        name: 'proteted-operator',
+        name: 'protected-operator',
         icon: 'touch_app',
         label: 'Protected (Operator Accepted)',
         description: 'This endpoint may be accessed by any user with the "operator" role',
@@ -65,6 +65,7 @@ export class RolesComponent implements OnInit {
         addMessage({
           message: `Failed to access protected route`,
           snackBar: true,
+          consoleData: err,
         }),
         endpointIndicatorFail({ endpointKey }),
       ]),
