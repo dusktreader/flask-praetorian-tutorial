@@ -30,3 +30,8 @@ export const TApiCallFail = '[API] Request to API failed';
 export const apiCallFail = createAction(TApiCallFail, (payload: IApiCall) => ({
   payload,
 }));
+
+export const TApiCallInject = '[API] Request to API injected with token';
+export const apiCallInject = createAction(TApiCallInject, (payload: any) => ({
+  payload,
+}));

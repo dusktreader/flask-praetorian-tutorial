@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { first, mergeMap } from 'rxjs/operators';
 
 import { IAppState } from '@app/store/states/app.state';
+import { apiCallInject } from '@app/store/actions/api.actions';
 import { selectToken } from '@app/store/selectors/auth.selector';
 
 @Injectable()
@@ -16,7 +17,9 @@ export class TokenInterceptorService implements HttpInterceptor {
     if (!token) {
       return req;
     }
-    return req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+    const header = { Authorization: `Bearer ${token}` };
+    this.store.dispatch(apiCallInject(header));
+    return req.clone({ setHeaders: header });
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

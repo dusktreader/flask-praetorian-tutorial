@@ -20,5 +20,13 @@ export const selectToken = createSelector(
 
 export const selectTokenData = createSelector(
   selectFeature,
-  (state: IAuthState) => state.token ? jwtHelper.decodeToken(state.token) : {},
+  (state: IAuthState) => {
+    if (state.token) {
+      return {
+        ...jwtHelper.decodeToken(state.token),
+        rawToken: state.token,
+      };
+    }
+    return null;
+  },
 );

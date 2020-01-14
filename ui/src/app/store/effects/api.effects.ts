@@ -40,7 +40,7 @@ export class ApiEffects {
           map(resp => {
             return apiCallOk({ ...payload, response: resp });
           }),
-          catchError(err => of(apiCallFail({ ...payload, failError: err }))),
+          catchError(err => of(apiCallFail({ ...payload, response: err }))),
           ),
         ),
       );
@@ -65,7 +65,7 @@ export class ApiEffects {
       ofType(apiCallFail),
       map(action => action.payload),
       switchMap(payload => ([
-        ...payload.failActioners(payload.response, payload.failError),
+        ...payload.failActioners(payload.response, payload.response),
         addMessage({
           message: 'Received Fail Response',
           consoleData: payload.response ,

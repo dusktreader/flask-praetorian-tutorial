@@ -1,5 +1,5 @@
 import { createReducer, on, State, Action } from '@ngrx/store';
-import { apiCall, apiCallOk, apiCallFail } from '../actions/api.actions';
+import { apiCall, apiCallOk, apiCallFail, apiCallInject } from '../actions/api.actions';
 import { initialState, IState } from '../states/api.state';
 
 export function reducer(state: IState | undefined, action: Action) {
@@ -18,10 +18,18 @@ export function reducer(state: IState | undefined, action: Action) {
       state: 'successful api call',
     })),
 
-    on(apiCallFail, (previousState, { payload }) => ({
+    on(apiCallFail, (previousState, { payload }) => {
+      return ({
+        ...previousState,
+        response: payload.response,
+        state: 'failed api call',
+      });
+    }),
+
+    on(apiCallInject, (previousState, { payload }) => ({
       ...previousState,
-      response: payload.response,
-      state: 'failed api call',
+      request: { ...previousState.request, header: payload },
+      state: 'injected token header into api call',
     })),
   )(state, action);
 }
