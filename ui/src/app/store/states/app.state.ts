@@ -18,6 +18,9 @@ import {
   IState as IEndpointIndicatorState,
   initialState as initialEndpointIndicatorState,
 } from './timer.state';
+import {
+  IState as IRouterState,
+} from './router.state';
 
 export interface IAppState {
   api?: IApiState;
@@ -25,6 +28,7 @@ export interface IAppState {
   message?: IMessageState;
   timer?: ITimerState;
   endpointIndicator?: IEndpointIndicatorState;
+  router?: IRouterState;
 }
 
 export const initialAppState: IAppState = {

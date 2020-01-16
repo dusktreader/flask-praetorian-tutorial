@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { routerReducer } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { StoreModule } from '@ngrx/store';
@@ -82,6 +83,7 @@ import { TimerEffects } from '@app/store/effects/timer.effects';
       auth: authReducer,
       timer: timerReducer,
       endpointIndicator: endpointIndicatorReducer,
+      router: routerReducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

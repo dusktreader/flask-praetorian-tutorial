@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 
+import { IAppState } from '@app/store/states/app.state';
+import { selectRouter, selectSnapshot, selectTitle } from '@app/store/selectors/router.selector';
 
 @Component({
   selector: 'app-root',
@@ -9,25 +10,10 @@ import { filter, map } from 'rxjs/operators';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-  ) {}
+  constructor(private store: Store<IAppState>) {}
   ngOnInit() {
-    this.router.events
-      .pipe(
-        filter(event => event instanceof NavigationEnd),
-        map(() => {
-          const child = this.activatedRoute.firstChild;
-          let newName: string;
-          if (child && child.snapshot.data.title) {
-            newName = child.snapshot.data.title;
-          }
-          return newName;
-        }),
-      )
-      .subscribe((name: string) => {
-        console.log('Router event subscription');
-      });
+    this.store.pipe(select(selectRouter)).subscribe(whatever => console.log('ROUTER: ', whatever));
+    this.store.pipe(select(selectSnapshot)).subscribe(whatever => console.log('SNAPSHOT: ', whatever));
+    this.store.pipe(select(selectTitle)).subscribe(whatever => console.log('TITLE: ', whatever));
   }
 }
