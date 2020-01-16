@@ -1,0 +1,6 @@
+Add a hamburger for the login expander. hamburger should disappear when open? Or change to collapse icon?
+List roles for current user in expander title
+Work on text styling for page contents
+Add padding around buttons for login expander
+Better formatting for log messages
+Handle errors in selectors for token et al
