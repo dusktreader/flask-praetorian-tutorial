@@ -13,11 +13,13 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { RolesComponent } from './roles/roles.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SectionNavComponent } from './section-nav/section-nav.component';
 import { TokenInterceptorService } from './services/token-interceptor.service';
+
+import { HomeComponent } from '@app/sections/home/home.component';
+import { RolesComponent } from '@app/sections/roles/roles.component';
+import { RefreshComponent } from '@app/sections/refresh/refresh.component';
 
 import {
   MatButtonModule,
@@ -54,6 +56,7 @@ import { TimerEffects } from '@app/store/effects/timer.effects';
     AppComponent,
     HomeComponent,
     RolesComponent,
+    RefreshComponent,
     SectionNavComponent,
   ],
   imports: [

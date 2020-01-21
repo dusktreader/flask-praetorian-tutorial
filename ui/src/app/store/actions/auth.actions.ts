@@ -21,3 +21,14 @@ export const signInFail = createAction(TSignInFail, (message: string) => ({
 
 export const TSignOut = '[Auth] Sign Out';
 export const signOut = createAction(TSignOut);
+
+export const TRefresh = '[Auth] Refresh Token';
+export interface IRefresh {
+  token: string;
+}
+export const refresh = createAction(TRefresh, (payload: IRefresh) => ({
+  payload,
+}));
+
+export const TReset = '[Auth] Reset Preset Users';
+export const reset = createAction(TReset);

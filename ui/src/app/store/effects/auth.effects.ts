@@ -12,6 +12,7 @@ import {
   signInFail,
   signInOk,
   signOut,
+  reset,
 } from '@app/store/actions/auth.actions';
 import { apiCall } from '@app/store/actions/api.actions';
 

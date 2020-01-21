@@ -134,4 +134,21 @@ export class LoginComponent implements OnInit {
     );
     this.Panel.close();
   }
+
+  reset() {
+    this.store.dispatch(addMessage({
+      message: 'Resseting preset users',
+    }));
+    this.store.dispatch(resetPresets());
+    this.store.dispatch(signOut());
+    this.loginForm.setValue(
+      {
+        presetSelector: '',
+        username: '',
+        password: '',
+      },
+      { emitEvent: false }
+    );
+    this.Panel.close();
+  }
 }

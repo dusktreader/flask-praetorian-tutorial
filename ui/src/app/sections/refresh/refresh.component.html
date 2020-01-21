@@ -1,0 +1,16 @@
+<div
+  class="container"
+  fxLayout="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+>
+  <div>
+    <h2>Refreshing access-expired tokens</h2>
+    <p>
+      This page demonstrates how tokens with their access lifespan expired may
+      be refreshed
+    </p>
+
+    <app-endpoint-list name="refresh" [endpoints]="endpoints" (fire)="fire($event)"></app-endpoint-list>
+  </div>
+</div>
