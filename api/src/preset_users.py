@@ -1,0 +1,32 @@
+PREST_USERS = [
+    dict(
+        username='TheDude',
+        password='abides',
+        firstname='Jeffrey',
+        nickname='The Dude',
+        surname='Lebowski',
+    ),
+    dict(
+        username='Walter',
+        password='calmerthanyouare',
+        roles='admin',
+        firstname='Walter',
+        surname='Sobchak',
+    ),
+    dict(
+        username='Donnie',
+        password='iamthewalrus',
+        roles='operator',
+        firstname='Theodore',
+        nickname='Donny',
+        surname='Kerabatsos',
+    ),
+    dict(
+        username='Maude',
+        password='andthorough',
+        roles='operator,admin',
+        firstname='Maude',
+        nickname='Mauddie',
+        surname='Lebowski',
+    ),
+]

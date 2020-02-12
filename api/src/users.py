@@ -1,4 +1,5 @@
 from .extensions import db, guard
+from .preset_users import PRESET_USERS
 
 
 class User(db.Model):
@@ -14,6 +15,7 @@ class User(db.Model):
     firstname = db.Column(db.Text)
     surname = db.Column(db.Text)
     nickname = db.Column(db.Text)
+    description = db.Column(db.Text)
 
     @property
     def rolenames(self):
@@ -44,34 +46,8 @@ class User(db.Model):
         """
         with app.app_context():
             db.create_all()
-            db.session.add(cls(
-                username='TheDude',
-                password=guard.hash_password('abides'),
-                firstname='Jeffrey',
-                nickname='The Dude',
-                surname='Lebowski',
-            ))
-            db.session.add(cls(
-                username='Walter',
-                password=guard.hash_password('calmerthanyouare'),
-                roles='admin',
-                firstname='Walter',
-                surname='Sobchak',
-            ))
-            db.session.add(cls(
-                username='Donnie',
-                password=guard.hash_password('iamthewalrus'),
-                roles='operator',
-                firstname='Theodore',
-                nickname='Donny',
-                surname='Kerabatsos',
-            ))
-            db.session.add(cls(
-                username='Maude',
-                password=guard.hash_password('andthorough'),
-                roles='operator,admin',
-                firstname='Maude',
-                nickname='Mauddie',
-                surname='Lebowski',
-            ))
+            [
+                db.session.add(dict(**u, password=guard.hash_password(u['password'])))
+                for u in PRESET_USERS
+            ]
             db.session.commit()

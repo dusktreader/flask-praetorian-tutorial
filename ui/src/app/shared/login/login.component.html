@@ -31,8 +31,8 @@
       <mat-form-field>
         <mat-label>Preset Logins</mat-label>
         <mat-select formControlName="presetSelector">
-          <mat-option *ngFor='let preset of presetLogins' [value]='preset'>
-            {{ preset.username }} ({{ preset.comment }})
+          <mat-option *ngFor='let presetUser of presetUsers$ | async' [value]='presetUser'>
+            {{ preset.username }} ({{ preset.roles }})
           </mat-option>
         </mat-select>
       </mat-form-field>

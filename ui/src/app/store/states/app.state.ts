@@ -21,6 +21,10 @@ import {
 import {
   IState as IRouterState,
 } from './router.state';
+import {
+  IState as IPresetUserState,
+  initialState as initialPresetUserState,
+} from './preset-user.state';
 
 export interface IAppState {
   api?: IApiState;
@@ -28,6 +32,7 @@ export interface IAppState {
   message?: IMessageState;
   timer?: ITimerState;
   endpointIndicator?: IEndpointIndicatorState;
+  presetUsers?: IPresetUserState;
   router?: IRouterState;
 }
 
@@ -36,5 +41,6 @@ export const initialAppState: IAppState = {
   auth: initialAuthState,
   message: initialMessageState,
   timer: initialTimerState,
+  presetUsers: initialPresetUserState,
   endpointIndicator: initialEndpointIndicatorState,
 };

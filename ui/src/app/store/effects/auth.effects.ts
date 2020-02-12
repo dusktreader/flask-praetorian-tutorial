@@ -9,10 +9,12 @@ import { ApiService } from '@app/services/api.service';
 
 import {
   signIn,
-  signInFail,
   signInOk,
   signOut,
-  reset,
+  disable,
+  disableOk,
+  enable,
+  enableOk,
 } from '@app/store/actions/auth.actions';
 import { apiCall } from '@app/store/actions/api.actions';
 
@@ -43,7 +45,55 @@ export class AuthEffects {
             snackBar: true,
           }),
         ]),
-        failActioners: (response, err) => ([signInFail(err)]),
+        failActioners: (response, err) => ([]),
+      })),
+    );
+  });
+
+  disable$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(disable),
+      map(action => action.payload),
+      map(payload => apiCall({
+        request: {
+          method: 'post',
+          url: 'http://localhost:5000/reset',
+          payload: {
+            username: payload.username,
+          }
+        },
+        okActioners: (response) => ([
+          disableOk(payload),
+          addMessage({
+            message: `Successfully disabled user ${payload.username}`,
+            snackBar: true,
+          }),
+        ]),
+        failActioners: (response, err) => ([]),
+      })),
+    );
+  });
+
+  enable$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(enable),
+      map(action => action.payload),
+      map(payload => apiCall({
+        request: {
+          method: 'post',
+          url: 'http://localhost:5000/reset',
+          payload: {
+            username: payload.username,
+          }
+        },
+        okActioners: (response) => ([
+          enableOk(payload),
+          addMessage({
+            message: `Successfully enabled user ${payload.username}`,
+            snackBar: true,
+          }),
+        ]),
+        failActioners: (response, err) => ([]),
       })),
     );
   });

@@ -1,6 +1,6 @@
 import { createReducer, on, State, Action } from '@ngrx/store';
-import { signInOk, signOut, refresh } from '../actions/auth.actions';
-import { initialState, IState } from '../states/message.state';
+import { signInOk, signOut, refresh, disableOk, enableOk } from '@app/store/actions/auth.actions';
+import { initialState, IState } from '@app/store/states/auth.state';
 
 export function reducer(state: IState | undefined, action: Action) {
   return createReducer(
@@ -18,9 +18,6 @@ export function reducer(state: IState | undefined, action: Action) {
       ...previousState,
       token: payload.token,
     })),
-
-    on(reset, (previousState) => ({
-
 
   )(state, action);
 }

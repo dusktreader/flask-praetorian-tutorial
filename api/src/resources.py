@@ -4,6 +4,7 @@ import flask_praetorian
 from .extensions import guard, db
 from .utilities import blacklist
 from .users import User
+from .preset_users import PRESET_USERS
 
 
 def login():
@@ -110,14 +111,28 @@ def protected_operator_accepted():
     )
 
 
-@flask_praetorian.auth_required
+def get_preset_users():
+    """
+    Fetches all of the preset users
+
+    .. example::
+       $ curl http://localhost/get_preset_users -X GET \
+    """
+    return flask.jsonfiy(preset_users=[
+        dict(
+            username=u['username'],
+            password=u['password'],
+            roles=u['roles'],
+        ) for u in PRESET_USERS
+    ])
+
+
 def disable_user():
     """
     Disables a user in the data store
 
     .. example::
         $ curl http://localhost:5000/disable_user -X POST \
-          -H "Authorization: Bearer <your_token>" \
           -d '{"username":"Walter"}'
     """
     req = flask.request.get_json(force=True)
@@ -125,6 +140,21 @@ def disable_user():
     usr.is_active = False
     db.session.commit()
     return flask.jsonify(message='disabled user {}'.format(usr.username))
+
+
+def enable_user():
+    """
+    Enables a user in the data store
+
+    .. example::
+        $ curl http://localhost:5000/enable_user -X POST \
+          -d '{"username":"Walter"}'
+    """
+    req = flask.request.get_json(force=True)
+    usr = User.query.filter_by(username=req.get('username', None)).one()
+    usr.is_active = True
+    db.session.commit()
+    return flask.jsonify(message='enabled user {}'.format(usr.username))
 
 
 @flask_praetorian.auth_required

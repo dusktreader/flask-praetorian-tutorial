@@ -14,11 +14,6 @@ export const signInOk = createAction(TSignInOk, (payload: ISignIn) => ({
   payload,
 }));
 
-export const TSignInFail = '[Auth] Sign in failed';
-export const signInFail = createAction(TSignInFail, (message: string) => ({
-  message,
-}));
-
 export const TSignOut = '[Auth] Sign Out';
 export const signOut = createAction(TSignOut);
 
@@ -30,5 +25,28 @@ export const refresh = createAction(TRefresh, (payload: IRefresh) => ({
   payload,
 }));
 
-export const TReset = '[Auth] Reset Preset Users';
-export const reset = createAction(TReset);
+export const TDisable = '[Auth] Disable User';
+export interface IDisable {
+  username: string;
+}
+export const disable = createAction(TDisable, (payload: IDisable) => ({
+  payload
+}));
+
+export const TDisableOk = '[Auth] Disable User succeeded';
+export const disableOk = createAction(TDisableOk, (payload: IDisable) => ({
+  payload
+}));
+
+export const TEnable = '[Auth] Enable User';
+export interface IEnable {
+  username: string;
+}
+export const enable = createAction(TEnable, (payload: IEnable) => ({
+  payload
+}));
+
+export const TEnableOk = '[Auth] Enable User succeeded';
+export const enableOk = createAction(TEnableOk, (payload: IEnable) => ({
+  payload
+}));

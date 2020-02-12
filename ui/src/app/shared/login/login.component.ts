@@ -7,6 +7,7 @@ import { map, filter } from 'rxjs/operators';
 import * as moment from 'moment';
 
 import { Store, select } from '@ngrx/store';
+
 import { IAppState } from '@app/store/states/app.state';
 import { add as addMessage } from '@app/store/actions/message.actions';
 import { signIn, signOut } from '@app/store/actions/auth.actions';
@@ -21,14 +22,11 @@ import {
   selectRefreshRemainingPct,
   selectRefreshRemainingHuman,
 } from '@app/store/selectors/timer.selector';
+import { selectPresetUsers } from '@app/store/selectors/preset-user.selector';
+import { fetch as fetchPresetUsers } from '@app/store/actions/preset-user.actions';
 
 import { Request } from '@app/models/request.model';
-
-export interface PresetLogin {
-  username: string;
-  password: string;
-  comment: string;
-}
+import { PresetUser } from '@app/models/preset-user.model';
 
 @Component({
   selector: 'app-login',
@@ -48,28 +46,7 @@ export class LoginComponent implements OnInit {
   refreshRemainsHuman$: Observable<string>;
   refreshRemainsPct$: Observable<number>;
 
-  presetLogins: Array<PresetLogin> = [
-    {
-      username: 'TheDude',
-      password: 'abides',
-      comment: 'basic user',
-    },
-    {
-      username: 'Walter',
-      password: 'calmerthanyouare',
-      comment: 'admin user',
-    },
-    {
-      username: 'Donnie',
-      password: 'iamthewalrus',
-      comment: 'operator user',
-    },
-    {
-      username: 'Maude',
-      password: 'andthorough',
-      comment: 'admin user',
-    },
-  ];
+  presetUsers$: Observable<Array<PresetUser>>;
   loginForm: FormGroup;
 
   constructor(
@@ -79,6 +56,8 @@ export class LoginComponent implements OnInit {
 
 
   ngOnInit() {
+    this.store.dispatch(fetchPresetUsers());
+    this.presetUsers$ = this.store.pipe(select(selectPresetUsers));
     this.loginForm = this.formBuilder.group({
       presetSelector: [''],
       username: ['', Validators.required],
@@ -137,9 +116,9 @@ export class LoginComponent implements OnInit {
 
   reset() {
     this.store.dispatch(addMessage({
-      message: 'Resseting preset users',
+      message: 'Reseting preset users',
     }));
-    this.store.dispatch(resetPresets());
+    // this.store.dispatch(reset());
     this.store.dispatch(signOut());
     this.loginForm.setValue(
       {

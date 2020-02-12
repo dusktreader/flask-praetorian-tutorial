@@ -44,11 +44,13 @@ import { reducer as messageReducer } from '@app/store/reducers/message.reducers'
 import { reducer as authReducer } from '@app/store/reducers/auth.reducers';
 import { reducer as timerReducer } from '@app/store/reducers/timer.reducers';
 import { reducer as endpointIndicatorReducer } from '@app/store/reducers/endpoint-indicator.reducers';
+import { reducer as presetUsersReducer } from '@app/store/reducers/preset-user.reducers';
 
 import { ApiEffects } from '@app/store/effects/api.effects';
 import { MessageEffects } from '@app/store/effects/message.effects';
 import { AuthEffects } from '@app/store/effects/auth.effects';
 import { TimerEffects } from '@app/store/effects/timer.effects';
+import { PresetUserEffects } from '@app/store/effects/preset-user.effects';
 
 
 @NgModule({
@@ -87,6 +89,7 @@ import { TimerEffects } from '@app/store/effects/timer.effects';
       timer: timerReducer,
       endpointIndicator: endpointIndicatorReducer,
       router: routerReducer,
+      presetUsers: presetUsersReducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
@@ -97,6 +100,7 @@ import { TimerEffects } from '@app/store/effects/timer.effects';
       MessageEffects,
       AuthEffects,
       TimerEffects,
+      PresetUserEffects,
     ]),
   ],
   providers: [
