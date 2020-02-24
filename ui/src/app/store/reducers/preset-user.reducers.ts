@@ -8,7 +8,7 @@ export function reducer(state: IState | undefined, action: Action) {
 
     on(fetchOk, (previousState, { payload }) => ({
       ...previousState,
-      users: payload.presetUsers,
+      users: payload,
     })),
 
   )(state, action);

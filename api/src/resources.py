@@ -118,11 +118,11 @@ def get_preset_users():
     .. example::
        $ curl http://localhost/get_preset_users -X GET \
     """
-    return flask.jsonfiy(preset_users=[
+    return flask.jsonify(preset_users=[
         dict(
             username=u['username'],
             password=u['password'],
-            roles=u['roles'],
+            roles=u.get('roles', ''),
         ) for u in PRESET_USERS
     ])
 
@@ -264,4 +264,9 @@ def register_routes(app):
         '/finalize',
         view_func=finalize,
         methods=['POST'],
+    )
+    app.add_url_rule(
+        '/get_preset_users',
+        view_func=get_preset_users,
+        methods=['GET'],
     )

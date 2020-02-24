@@ -30,3 +30,22 @@ export const selectTokenData = createSelector(
     return null;
   },
 );
+
+export const selectRoles = createSelector(
+  selectTokenData,
+  (tokenData: any) => tokenData ? tokenData.rls : null,
+);
+
+export const selectUserDisplay = createSelector(
+  selectUsername,
+  selectRoles,
+  (username: string, roles: string) => {
+    if (!username) {
+      return null;
+    } else if (roles) {
+      return `${username} (${roles})`;
+    } else {
+      return username;
+    }
+  },
+);

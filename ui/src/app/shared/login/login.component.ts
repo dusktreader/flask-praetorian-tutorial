@@ -11,7 +11,7 @@ import { Store, select } from '@ngrx/store';
 import { IAppState } from '@app/store/states/app.state';
 import { add as addMessage } from '@app/store/actions/message.actions';
 import { signIn, signOut } from '@app/store/actions/auth.actions';
-import { selectToken, selectUsername } from '@app/store/selectors/auth.selector';
+import { selectToken, selectUserDisplay } from '@app/store/selectors/auth.selector';
 import {
   selectAccessRemaining,
   selectAccessRemainingPct,
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
   @ViewChild('panel', {static: false}) Panel: MatExpansionPanel;
   token$: Observable<string>;
   titleString$: Observable<string>;
-  username$: Observable<string>;
+  userString$: Observable<string>;
 
   accessRemains$: Observable<number>;
   accessRemainsHuman$: Observable<string>;
@@ -57,7 +57,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(fetchPresetUsers());
-    this.presetUsers$ = this.store.pipe(select(selectPresetUsers));
+    this.presetUsers$ = this.store.pipe(
+      select(selectPresetUsers),
+      filter(users => !!users),
+    );
     this.loginForm = this.formBuilder.group({
       presetSelector: [''],
       username: ['', Validators.required],
@@ -75,9 +78,9 @@ export class LoginComponent implements OnInit {
     ).subscribe(token => {
       this.Panel.close();
     });
-    this.username$ = this.store.pipe(select(selectUsername));
-    this.titleString$ = this.username$.pipe(
-      map( username => username ? `Signed in as ${username}` : 'Sign In'),
+    this.userString$ = this.store.pipe(select(selectUserDisplay));
+    this.titleString$ = this.userString$.pipe(
+      map( userString => userString ? `Signed in as ${userString}` : 'Sign In'),
     );
 
     this.accessRemains$ = this.store.pipe(select(selectAccessRemaining));

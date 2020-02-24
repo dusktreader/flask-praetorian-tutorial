@@ -1,4 +1,4 @@
-PREST_USERS = [
+PRESET_USERS = [
     dict(
         username='TheDude',
         password='abides',

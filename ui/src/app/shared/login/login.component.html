@@ -9,11 +9,11 @@
         fxLaoutAlign="center"
         fxLayoutGap="10px"
       >
-        <div *ngIf="username$ | async">
+        <div *ngIf="userString$ | async">
           Access Remaining: {{ accessRemainsHuman$ | async }}
           <mat-progress-bar mode="determinate" [value]="accessRemainsPct$ | async"></mat-progress-bar>
         </div>
-        <div *ngIf="username$ | async">
+        <div *ngIf="userString$ | async">
           Refresh Remaining: {{ refreshRemainsHuman$ | async }}
           <mat-progress-bar mode="determinate" [value]="refreshRemainsPct$ | async"></mat-progress-bar>
         </div>
@@ -31,7 +31,7 @@
       <mat-form-field>
         <mat-label>Preset Logins</mat-label>
         <mat-select formControlName="presetSelector">
-          <mat-option *ngFor='let presetUser of presetUsers$ | async' [value]='presetUser'>
+          <mat-option *ngFor='let preset of presetUsers$ | async' [value]='preset'>
             {{ preset.username }} ({{ preset.roles }})
           </mat-option>
         </mat-select>

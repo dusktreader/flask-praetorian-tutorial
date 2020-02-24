@@ -46,8 +46,14 @@ class User(db.Model):
         """
         with app.app_context():
             db.create_all()
-            [
-                db.session.add(dict(**u, password=guard.hash_password(u['password'])))
-                for u in PRESET_USERS
-            ]
+            for preset_user in PRESET_USERS:
+                new_user = cls(**{
+                    k: v for (k, v)
+                    in preset_user.items()
+                    if k != 'password'
+                })
+                new_user.password = guard.hash_password(
+                    preset_user['password']
+                )
+                db.session.add(new_user)
             db.session.commit()
