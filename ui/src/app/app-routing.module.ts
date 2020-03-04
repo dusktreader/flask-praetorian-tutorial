@@ -5,6 +5,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { HomeComponent } from '@app/sections/home/home.component';
 import { RolesComponent } from '@app/sections/roles/roles.component';
 import { RefreshComponent } from '@app/sections/refresh/refresh.component';
+import { BlacklistComponent } from '@app/sections/blacklist/blacklist.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -22,6 +23,11 @@ const routes: Routes = [
     path: 'refresh',
     component: RefreshComponent,
     data: { title: 'Refresh' },
+  },
+  {
+    path: 'blacklist',
+    component: BlacklistComponent,
+    data: { title: 'Blacklist' },
   },
 ];
 

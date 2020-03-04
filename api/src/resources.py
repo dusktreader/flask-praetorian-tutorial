@@ -127,6 +127,7 @@ def get_preset_users():
     ])
 
 
+@flask_praetorian.auth_required
 def disable_user():
     """
     Disables a user in the data store
@@ -140,21 +141,6 @@ def disable_user():
     usr.is_active = False
     db.session.commit()
     return flask.jsonify(message='disabled user {}'.format(usr.username))
-
-
-def enable_user():
-    """
-    Enables a user in the data store
-
-    .. example::
-        $ curl http://localhost:5000/enable_user -X POST \
-          -d '{"username":"Walter"}'
-    """
-    req = flask.request.get_json(force=True)
-    usr = User.query.filter_by(username=req.get('username', None)).one()
-    usr.is_active = True
-    db.session.commit()
-    return flask.jsonify(message='enabled user {}'.format(usr.username))
 
 
 @flask_praetorian.auth_required

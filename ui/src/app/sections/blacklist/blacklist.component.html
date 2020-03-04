@@ -1,0 +1,18 @@
+<div
+  class="container"
+  fxLayout="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+>
+  <div>
+    <h2>Blacklisting tokens (and disabling users)</h2>
+    <p>
+      This page demonstrates how tokens may be blacklisted while they are still
+      active (not expired). Even if a user is disabled, an active token may be
+      used to access protected endpoints. However, a blacklisted token may be
+      blocked
+    </p>
+
+    <app-endpoint-list name="blacklist" [endpoints]="endpoints" (fire)="fire($event)"></app-endpoint-list>
+  </div>
+</div>
