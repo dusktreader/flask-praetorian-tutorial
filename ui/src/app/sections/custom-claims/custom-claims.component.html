@@ -1,0 +1,27 @@
+<div
+  class="container"
+  fxLayout="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+>
+  <div>
+    <h2>Embedding custom claims in your token</h2>
+    <p>
+      This page demonstrates how custom claims can be used to include user defined
+      fields in the token. For instance, the demo api for this tutorial includes
+      the user's first, last and nickname in the token. If a user is signed in, the
+      full name will be shown here.
+    </p>
+
+    <div *ngIf="fullName$ | async as fullName">
+      <mat-card>
+        <mat-card-title>Currently logged in user</mat-card-title>
+        <mat-card-content>
+          <span>{{ fullName }}</span>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <app-endpoint-list name="custom-claims" [endpoints]="endpoints" (fire)="fire($event)"></app-endpoint-list>
+  </div>
+</div>

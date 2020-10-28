@@ -17,7 +17,11 @@ export const selectNow = createSelector(
 export const selectAccessRemaining = createSelector(
   selectNow,
   selectTokenData,
-  (now: moment.Moment, tokenData: any) => tokenData.exp - now.unix(),
+  (now: moment.Moment, tokenData: any) => {
+    console.log("NOW: ", now.unix());
+    console.log("EXP: ", tokenData.exp);
+    return tokenData.exp - now.unix();
+  },
 );
 
 export const selectAccessRemainingPct = createSelector(
@@ -30,7 +34,10 @@ export const selectAccessRemainingPct = createSelector(
 
 export const selectAccessRemainingHuman = createSelector(
   selectAccessRemaining,
-  (remains: number) => remains > 0 ? humanizer(remains * 1000) : 'Expired',
+  (remains: number) => {
+    console.log("REMAINS: ", remains);
+    return remains > 0 ? humanizer(remains * 1000) : 'Expired';
+  },
 );
 
 export const selectRefreshRemaining = createSelector(

@@ -15,12 +15,21 @@ services:
       SQLITE_TEMP_DIR: /sqlite_temp
       JWT_ACCESS_LIFESPAN: '30s'
       JWT_REFRESH_LIFESPAN: '2m'
-    ports:
-      - 5000:5000
+    ports: ['5000:5000']
 
   ui:
     build:
       context: ./ui
+      dockerfile: Dockerfile-dev
+    volumes:
+      - ./ui/src:/app/src
+      - ./ui/angular.json:/app/angular.json
+      - ./ui/browserslist:/app/browserslist
+      - ./ui/jest.config.js:/app/jest.config.js
+      - ./ui/tsconfig.json:/app/tsconfig.json
+      - ./ui/tsconfig.app.json:/app/tsconfig.app.json
+      - ./ui/tslint.json:/app/tslint.json
+    ports: ['4200:4200']
 
   mailer:
     image: djfarrelly/maildev
