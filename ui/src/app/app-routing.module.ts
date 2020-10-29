@@ -7,6 +7,7 @@ import { RolesComponent } from '@app/sections/roles/roles.component';
 import { RefreshComponent } from '@app/sections/refresh/refresh.component';
 import { BlacklistComponent } from '@app/sections/blacklist/blacklist.component';
 import { CustomClaimsComponent } from '@app/sections/custom-claims/custom-claims.component';
+import { RegisterComponent } from '@app/sections/register/register.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -34,6 +35,11 @@ const routes: Routes = [
     path: 'custom-claims',
     component: CustomClaimsComponent,
     data: { title: 'Custom Claims' },
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    data: { title: 'Email Registration' },
   },
 ];
 

@@ -9,7 +9,6 @@ export class MessagesService {
   messages: string[] = [];
 
   add(message: string, snack: boolean = false) {
-    console.log(message);
     this.messages.push(message);
     if (snack) {
       this.snackBar.open(message, 'x', { duration: 3000 });

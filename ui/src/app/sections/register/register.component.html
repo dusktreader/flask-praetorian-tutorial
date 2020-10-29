@@ -1,0 +1,39 @@
+<div
+  class="container"
+  fxLayout="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+>
+  <div>
+    <h2>Registering users via email</h2>
+    <p>
+      This page demonstrates...
+    </p>
+
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <div
+        fxLayout="row"
+        fxLayout.xs="column"
+        fxLayoutAlign="start"
+        fxLayoutGap="10px"
+      >
+        <mat-form-field>
+          <input matInput placeholder="Username" formControlName="username" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Password" formControlName="password" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" />
+        </mat-form-field>
+      </div>
+    </form>
+
+
+    <app-endpoint-list
+      name="register"
+      [endpoints]="endpoints"
+      (fire)="fire($event)">
+    </app-endpoint-list>
+  </div>
+</div>

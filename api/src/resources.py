@@ -17,10 +17,10 @@ def login():
          -d '{"username":"Walter","password":"calmerthanyouare"}'
     """
     req = flask.request.get_json(force=True)
-    username = req.get('username', None)
-    password = req.get('password', None)
-    access_lifespan = req.get('access_lifespan', None)
-    refresh_lifespan = req.get('refresh_lifespan', None)
+    username = req.get("username", None)
+    password = req.get("password", None)
+    access_lifespan = req.get("access_lifespan", None)
+    refresh_lifespan = req.get("refresh_lifespan", None)
     user = guard.authenticate(username, password)
     return flask.jsonify(
         access_token=guard.encode_jwt_token(
@@ -59,9 +59,9 @@ def protected():
          -H "Authorization: Bearer <your_token>"
     """
     custom_claims = flask_praetorian.current_custom_claims()
-    firstname = custom_claims.pop('firstname', None)
-    nickname = custom_claims.pop('nickname', None)
-    surname = custom_claims.pop('surname', None)
+    firstname = custom_claims.pop("firstname", None)
+    nickname = custom_claims.pop("nickname", None)
+    surname = custom_claims.pop("surname", None)
 
     if firstname is not None and surname is not None:
         if nickname is None:
@@ -71,12 +71,10 @@ def protected():
     else:
         user_string = f"{flask_praetorian.current_user().username}"
 
-    return flask.jsonify(
-        message=f"protected endpoint (allowed user {user_string})"
-    )
+    return flask.jsonify(message=f"protected endpoint (allowed user {user_string})")
 
 
-@flask_praetorian.roles_required('admin')
+@flask_praetorian.roles_required("admin")
 def protected_admin_required():
     """
     A protected endpoint that requires a role. The roles_required decorator
@@ -87,13 +85,13 @@ def protected_admin_required():
           -H "Authorization: Bearer <your_token>"
     """
     return flask.jsonify(
-        message='protected_admin_required endpoint (allowed user {})'.format(
+        message="protected_admin_required endpoint (allowed user {})".format(
             flask_praetorian.current_user().username,
         )
     )
 
 
-@flask_praetorian.roles_accepted('operator', 'admin')
+@flask_praetorian.roles_accepted("operator", "admin")
 def protected_operator_accepted():
     """
     A protected endpoint that accepts any of the listed roles. The
@@ -105,7 +103,7 @@ def protected_operator_accepted():
          -H "Authorization: Bearer <your_token>"
     """
     return flask.jsonify(
-        message='protected_operator_accepted endpoint (allowed usr {})'.format(
+        message="protected_operator_accepted endpoint (allowed usr {})".format(
             flask_praetorian.current_user().username,
         )
     )
@@ -118,13 +116,16 @@ def get_preset_users():
     .. example::
        $ curl http://localhost/get_preset_users -X GET \
     """
-    return flask.jsonify(preset_users=[
-        dict(
-            username=u['username'],
-            password=u['password'],
-            roles=u.get('roles', ''),
-        ) for u in PRESET_USERS
-    ])
+    return flask.jsonify(
+        preset_users=[
+            dict(
+                username=u["username"],
+                password=u["password"],
+                roles=u.get("roles", ""),
+            )
+            for u in PRESET_USERS
+        ]
+    )
 
 
 @flask_praetorian.auth_required
@@ -137,10 +138,10 @@ def disable_user():
           -d '{"username":"Walter"}'
     """
     req = flask.request.get_json(force=True)
-    usr = User.query.filter_by(username=req.get('username', None)).one()
+    usr = User.query.filter_by(username=req.get("username", None)).one()
     usr.is_active = False
     db.session.commit()
-    return flask.jsonify(message='disabled user {}'.format(usr.username))
+    return flask.jsonify(message="disabled user {}".format(usr.username))
 
 
 @flask_praetorian.auth_required
@@ -153,9 +154,9 @@ def blacklist_token():
          -d '{"token":"<your_token>"}'
     """
     req = flask.request.get_json(force=True)
-    data = guard.extract_jwt_token(req['token'])
-    blacklist.add(data['jti'])
-    return flask.jsonify(message='token blacklisted ({})'.format(req['token']))
+    data = guard.extract_jwt_token(req["token"])
+    blacklist.add(data["jti"])
+    return flask.jsonify(message="token blacklisted ({})".format(req["token"]))
 
 
 def register():
@@ -172,22 +173,31 @@ def register():
          }'
     """
     logger = flask.current_app.logger
-    logger.debug("PROCESSING REQUEST")
     req = flask.request.get_json(force=True)
-    username = req.get('username', None)
-    email = req.get('email', None)
-    password = req.get('password', None)
+    username = req.get("username", None)
+    email = req.get("email", None)
+    password = req.get("password", None)
+    logger.debug("Processing register request for:")
+    logger.debug(f"  {username}")
+    logger.debug(f"  {password}")
+    logger.debug(f"  {email}")
     new_user = User(
         username=username,
         password=guard.hash_password(password),
-        roles='operator',
+        roles="operator",
     )
     db.session.add(new_user)
     db.session.commit()
-    guard.send_registration_email(email, user=new_user)
-    ret = {'message': 'successfully sent registration email to user {}'.format(
-        new_user.username
-    )}
+    try:
+        guard.send_registration_email(email, user=new_user)
+    except Exception as err:
+        logger.error(f"Couldn't send registration email: {err}")
+        raise
+    ret = {
+        "message": "successfully sent registration email to user {}".format(
+            new_user.username
+        )
+    }
     return flask.jsonify(ret)
 
 
@@ -204,55 +214,55 @@ def finalize():
     registration_token = guard.read_token_from_header()
     user = guard.get_user_from_registration_token(registration_token)
     # perform 'activation' of user here...like setting 'active' or something
-    ret = {'access_token': guard.encode_jwt_token(user)}
+    ret = {"access_token": guard.encode_jwt_token(user)}
     logger.debug("ENCODED NEW TOKEN")
     return flask.jsonify(ret), 200
 
 
 def register_routes(app):
     app.add_url_rule(
-        '/login',
+        "/login",
         view_func=login,
-        methods=['POST'],
+        methods=["POST"],
     )
     app.add_url_rule(
-        '/refresh',
+        "/refresh",
         view_func=refresh,
     )
     app.add_url_rule(
-        '/protected',
+        "/protected",
         view_func=protected,
     )
     app.add_url_rule(
-        '/protected_operator_accepted',
+        "/protected_operator_accepted",
         view_func=protected_operator_accepted,
     )
     app.add_url_rule(
-        '/protected_admin_required',
+        "/protected_admin_required",
         view_func=protected_admin_required,
     )
     app.add_url_rule(
-        '/disable_user',
+        "/disable_user",
         view_func=disable_user,
-        methods=['POST'],
+        methods=["POST"],
     )
     app.add_url_rule(
-        '/blacklist_token',
+        "/blacklist_token",
         view_func=blacklist_token,
-        methods=['POST'],
+        methods=["POST"],
     )
     app.add_url_rule(
-        '/register',
+        "/register",
         view_func=register,
-        methods=['POST'],
+        methods=["POST"],
     )
     app.add_url_rule(
-        '/finalize',
+        "/finalize",
         view_func=finalize,
-        methods=['POST'],
+        methods=["POST"],
     )
     app.add_url_rule(
-        '/get_preset_users',
+        "/get_preset_users",
         view_func=get_preset_users,
-        methods=['GET'],
+        methods=["GET"],
     )

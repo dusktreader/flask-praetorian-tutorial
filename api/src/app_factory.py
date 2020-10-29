@@ -35,8 +35,6 @@ def create_app(*args, **kwargs):
         is_blacklisted=blacklist.is_blacklisted,
     )
 
-    print("LIFESPAN IS: ", guard.access_lifespan)
-
     # Initialize a local database for the tutorial
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///{}".format(
         tempfile.NamedTemporaryFile(
@@ -64,6 +62,8 @@ def create_app(*args, **kwargs):
         file_handler.setLevel(logging.DEBUG)
         app.logger.addHandler(file_handler)
         app.logger.info("logging to {log_file}".format(log_file=log_file))
+    app.logger.setLevel("DEBUG")
+    app.logger.debug(f"CONFIRMATION SENDER: {guard.confirmation_sender}")
 
     register_routes(app)
 

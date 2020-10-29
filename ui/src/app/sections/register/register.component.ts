@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -14,15 +15,19 @@ import {
 } from '@app/store/actions/endpoint-indicator.actions';
 
 @Component({
-  selector: 'app-custom-claims',
-  templateUrl: './custom-claims.component.html',
-  styleUrls: ['./custom-claims.component.scss'],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
 })
-export class CustomClaimsComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   endpoints: Array<IEndpoint>;
   nameParts$: Observable<any>;
+  registerForm: FormGroup;
 
-  constructor(private store: Store<IAppState>) {}
+  constructor(
+    private store: Store<IAppState>,
+    private formBuilder: FormBuilder,
+  ) {}
 
   ngOnInit() {
     this.nameParts$ = this.store.pipe(
@@ -33,24 +38,31 @@ export class CustomClaimsComponent implements OnInit {
         nickname: tokenData.nickname,
       })),
     );
+    this.registerForm = this.formBuilder.group({
+      presetSelector: [''],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      email: ['', Validators.required],
+    });
     this.endpoints = [
       {
-        name: 'protected',
-        icon: 'lock',
-        label: 'Protected',
-        description: 'This endpoint may be accessed by any user that is logged in',
+        name: 'register',
+        icon: 'assignment',
+        label: 'Register',
+        description: 'This endpoint may be used to register a new user',
       },
     ];
   }
 
   fire(endpointKey: string) {
     const endpointMap = {
-      'custom-claims-protected': 'http://localhost:5000/protected',
+      'register-register': 'http://localhost:5000/register',
     };
     this.store.dispatch(apiCall({
       request: {
-        method: 'get',
+        method: 'post',
         url: endpointMap[endpointKey],
+        payload: this.registerForm.value,
       },
       okActioners: (response) => ([
         endpointIndicatorSuccess({ endpointKey }),

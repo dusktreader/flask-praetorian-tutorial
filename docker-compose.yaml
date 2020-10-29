@@ -15,6 +15,9 @@ services:
       SQLITE_TEMP_DIR: /sqlite_temp
       JWT_ACCESS_LIFESPAN: '30s'
       JWT_REFRESH_LIFESPAN: '2m'
+      MAIL_SERVER: "True"
+      PRAETORIAN_CONFIRMATION_SENDER: "demo@tutorial.com"
+      PRAETORIAN_CONFIRMATION_URI: "http://localhost:5000/finalize"
     ports: ['5000:5000']
 
   ui:

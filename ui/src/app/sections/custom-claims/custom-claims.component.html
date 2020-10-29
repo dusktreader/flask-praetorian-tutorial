@@ -8,20 +8,26 @@
     <h2>Embedding custom claims in your token</h2>
     <p>
       This page demonstrates how custom claims can be used to include user defined
-      fields in the token. For instance, the demo api for this tutorial includes
-      the user's first, last and nickname in the token. If a user is signed in, the
-      full name will be shown here.
+      fields in the token. To see an example, log a user in.
     </p>
 
-    <div *ngIf="fullName$ | async as fullName">
+    <div *ngIf="nameParts$ | async as nameParts">
       <mat-card>
-        <mat-card-title>Currently logged in user</mat-card-title>
+        <mat-card-title>{{nameParts.fullname}}</mat-card-title>
+        <mat-card-subtitle *ngIf="nameParts.nickname">"{{nameParts.nickname}}"</mat-card-subtitle>
         <mat-card-content>
-          <span>{{ fullName }}</span>
+          <span>
+            This is the currently logged in user. The user's full name is included
+            as custom claims in the token. This includes first, last, and nicknames.
+          </span>
         </mat-card-content>
       </mat-card>
     </div>
 
-    <app-endpoint-list name="custom-claims" [endpoints]="endpoints" (fire)="fire($event)"></app-endpoint-list>
+    <app-endpoint-list
+      name="custom-claims"
+      [endpoints]="endpoints"
+      (fire)="fire($event)">
+    </app-endpoint-list>
   </div>
 </div>
