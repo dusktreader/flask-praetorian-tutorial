@@ -23,6 +23,9 @@ import { RefreshComponent } from '@app/sections/refresh/refresh.component';
 import { BlacklistComponent } from '@app/sections/blacklist/blacklist.component';
 import { CustomClaimsComponent } from '@app/sections/custom-claims/custom-claims.component';
 import { RegisterComponent } from '@app/sections/register/register.component';
+import { RegisterConfirmComponent } from '@app/sections/register-confirm/register-confirm.component';
+
+import { FakeEmailGuard } from '@app/guards/fake-email.guard';
 
 import {
   MatButtonModule,
@@ -64,6 +67,7 @@ import { PresetUserEffects } from '@app/store/effects/preset-user.effects';
     BlacklistComponent,
     CustomClaimsComponent,
     RegisterComponent,
+    RegisterConfirmComponent,
     SectionNavComponent,
   ],
   imports: [
@@ -115,6 +119,7 @@ import { PresetUserEffects } from '@app/store/effects/preset-user.effects';
       useClass: TokenInterceptorService,
       multi: true,
     },
+    FakeEmailGuard,
   ],
   bootstrap: [AppComponent],
 })

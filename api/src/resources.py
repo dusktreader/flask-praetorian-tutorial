@@ -211,11 +211,18 @@ def finalize():
          -H "Authorization: Bearer <your_token>"
     """
     logger = flask.current_app.logger
-    registration_token = guard.read_token_from_header()
+    logger.debug(f"Attempting to finalize registration")
+    logger.debug(f"Fetching token from header")
+    try:
+        registration_token = guard.read_token_from_header()
+    except Exception as err:
+        logger.error(f"Couldn't extract token from header: {str(err)}")
+        raise
+    logger.debug(f"Retrieved token {registration_token}")
     user = guard.get_user_from_registration_token(registration_token)
     # perform 'activation' of user here...like setting 'active' or something
+    logger.debug(f"Registered user {user}")
     ret = {"access_token": guard.encode_jwt_token(user)}
-    logger.debug("ENCODED NEW TOKEN")
     return flask.jsonify(ret), 200
 
 
@@ -259,7 +266,7 @@ def register_routes(app):
     app.add_url_rule(
         "/finalize",
         view_func=finalize,
-        methods=["POST"],
+        methods=["GET"],
     )
     app.add_url_rule(
         "/get_preset_users",

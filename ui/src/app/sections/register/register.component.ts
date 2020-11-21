@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -9,10 +10,12 @@ import { apiCall } from '@app/store/actions/api.actions';
 import { add as addMessage } from '@app/store/actions/message.actions';
 import { IAppState } from '@app/store/states/app.state';
 import { selectTokenData } from '@app/store/selectors/auth.selector';
+import { selectStatus } from '@app/store/selectors/endpoint-indicator.selector';
 import {
   endpointIndicatorSuccess,
   endpointIndicatorFail
 } from '@app/store/actions/endpoint-indicator.actions';
+import { EStatus } from '@app/store/states/endpoint-indicator.state';
 
 @Component({
   selector: 'app-register',
@@ -23,10 +26,12 @@ export class RegisterComponent implements OnInit {
   endpoints: Array<IEndpoint>;
   nameParts$: Observable<any>;
   registerForm: FormGroup;
+  sentRegistration$: Observable<boolean>;
 
   constructor(
     private store: Store<IAppState>,
     private formBuilder: FormBuilder,
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -52,6 +57,10 @@ export class RegisterComponent implements OnInit {
         description: 'This endpoint may be used to register a new user',
       },
     ];
+    this.sentRegistration$ = this.store.pipe(
+      select(selectStatus, ({ endpointKey: 'register-register' })),
+      map(status => status === EStatus.success),
+    );
   }
 
   fire(endpointKey: string) {
@@ -80,5 +89,9 @@ export class RegisterComponent implements OnInit {
         endpointIndicatorFail({ endpointKey }),
       ]),
     }));
+  }
+
+  goToEmail() {
+    this.router.navigate(['/fake-email']);
   }
 }

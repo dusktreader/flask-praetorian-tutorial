@@ -28,6 +28,10 @@ def create_app(*args, **kwargs):
     fetch_env(app, "MAIL_SERVER")
     fetch_env(app, "EXAMPLE")
 
+    # Add the mail extension if MAIL_SERVER is set
+    if app.config.get("MAIL_SERVER"):
+        mail.init_app(app)
+
     # Initialize the flask-praetorian instance for the app
     guard.init_app(
         app,
@@ -51,10 +55,6 @@ def create_app(*args, **kwargs):
 
     # Add in the users
     User.create_users(app)
-
-    # Add the mail extension if MAIL_SERVER is set
-    if app.config.get("MAIL_SERVER"):
-        mail.init_app(app)
 
     log_file = os.environ.get("EXAMPLE_LOG")
     if log_file is not None:

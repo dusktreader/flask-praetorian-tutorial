@@ -8,6 +8,9 @@ import { RefreshComponent } from '@app/sections/refresh/refresh.component';
 import { BlacklistComponent } from '@app/sections/blacklist/blacklist.component';
 import { CustomClaimsComponent } from '@app/sections/custom-claims/custom-claims.component';
 import { RegisterComponent } from '@app/sections/register/register.component';
+import { RegisterConfirmComponent } from '@app/sections/register-confirm/register-confirm.component';
+
+import { FakeEmailGuard } from '@app/guards/fake-email.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -40,6 +43,16 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
     data: { title: 'Email Registration' },
+  },
+  {
+    path: 'register-confirm',
+    component: RegisterConfirmComponent,
+    data: { title: 'Confirm Email Registration' },
+  },
+  {
+    path: 'fake-email',
+    canActivate: [ FakeEmailGuard ],
+    component: FakeEmailGuard,
   },
 ];
 

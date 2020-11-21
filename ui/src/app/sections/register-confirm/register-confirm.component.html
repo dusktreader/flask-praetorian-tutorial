@@ -1,0 +1,29 @@
+<div
+  class="container"
+  fxLayout="column"
+  fxLayoutAlign="center"
+  fxLayoutGap="10px"
+>
+  <div>
+    <h2>Confirming user registering via email</h2>
+    <p>
+    This page uses the registration token that was sent to you via email to finalize
+    registration for the new user
+    </p>
+
+    <mat-card class="token-card">
+      <mat-card-header>
+        <mat-card-title>Registration Token</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p> {{ currentToken }}
+      </mat-card-content>
+    </mat-card>
+
+    <app-endpoint-list
+      name="confirm"
+      [endpoints]="endpoints"
+      (fire)="fire($event)">
+    </app-endpoint-list>
+  </div>
+</div>

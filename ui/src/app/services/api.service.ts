@@ -25,12 +25,14 @@ export class ApiService {
       return this.http.get<any>(request.url, {
         observe: 'response',
         params: request.payload,
+        headers: request.header,
       });
     }
 
     if (request.method.toLowerCase() === 'post') {
       return this.http.post<any>(request.url, request.payload, {
         observe: 'response',
+        headers: request.header,
       });
     }
   }
