@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { MatExpansionPanel } from '@angular/material';
 import { Observable } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
+import { map, filter, tap } from 'rxjs/operators';
 import * as moment from 'moment';
 
 import { Store, select } from '@ngrx/store';
@@ -67,10 +67,33 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required],
     });
     this.loginForm.get('presetSelector').valueChanges.subscribe(
-      presetValue => this.loginForm.patchValue({
-        username: presetValue.username,
-        password: presetValue.password,
-      })
+      presetValue => {
+        if (!presetValue) {
+          this.loginForm.patchValue(
+            {
+              username: '',
+              password: '',
+            },
+            { emitEvent: false },
+          );
+        } else {
+          this.loginForm.patchValue(
+            {
+              username: presetValue.username,
+              password: presetValue.password,
+            },
+            { emitEvent: false },
+          );
+        }
+      },
+    );
+    this.loginForm.get('username').valueChanges.pipe(
+      filter(username => !!username),
+    ).subscribe(
+      _ => this.loginForm.patchValue(
+        { presetSelector: '' },
+        { emitEvent: false },
+      )
     );
     this.token$ = this.store.pipe(select(selectToken));
     this.token$.pipe(

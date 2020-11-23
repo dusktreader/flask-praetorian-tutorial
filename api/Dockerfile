@@ -16,6 +16,4 @@ COPY flask-praetorian-1.1.0a3.tar.gz /
 COPY pyproject.toml /app/pyproject.toml
 RUN poetry install
 
-RUN mkdir /sqlite_temp
-
 CMD ["flask", "run"]
