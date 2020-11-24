@@ -9,6 +9,10 @@ import { apiCall } from '@app/store/actions/api.actions';
 import { add as addMessage } from '@app/store/actions/message.actions';
 import { IAppState } from '@app/store/states/app.state';
 import { selectTokenData } from '@app/store/selectors/auth.selector';
+import {
+  endpointIndicatorSuccess,
+  endpointIndicatorFail
+} from '@app/store/actions/endpoint-indicator.actions';
 
 @Component({
   selector: 'app-register-confirm',
@@ -49,12 +53,14 @@ export class RegisterConfirmComponent implements OnInit {
         header: { Authorization: `Bearer ${this.currentToken}` },
       },
       okActioners: (response) => ([
+        endpointIndicatorSuccess({ endpointKey }),
         addMessage({
           message: `Successfully finalized registration`,
           snackBar: true,
         }),
       ]),
       failActioners: (response, err) => ([
+        endpointIndicatorFail({ endpointKey }),
         addMessage({
           message: `Failed to finalize registration`,
           snackBar: true,
