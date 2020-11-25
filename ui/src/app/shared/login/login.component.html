@@ -1,50 +1,50 @@
 <mat-expansion-panel #panel hideToggle>
   <mat-expansion-panel-header>
     <mat-panel-title>
-      {{ titleString$ | async }}
+      <mat-icon>person</mat-icon>
+      Sign In / Out
     </mat-panel-title>
-    <mat-panel-description>
-      <div
-        fxLayout="row"
-        fxLaoutAlign="center"
-        fxLayoutGap="10px"
-      >
-        <div *ngIf="userString$ | async">
-          Access Remaining: {{ accessRemainsHuman$ | async }}
-          <mat-progress-bar mode="determinate" [value]="accessRemainsPct$ | async"></mat-progress-bar>
-        </div>
-        <div *ngIf="userString$ | async">
-          Refresh Remaining: {{ refreshRemainsHuman$ | async }}
-          <mat-progress-bar mode="determinate" [value]="refreshRemainsPct$ | async"></mat-progress-bar>
-        </div>
-      </div>
-    </mat-panel-description>
   </mat-expansion-panel-header>
 
   <form [formGroup]="loginForm" (ngSubmit)="login()">
     <div
-      fxLayout="row"
+      fxLayout="column"
       fxLayout.xs="column"
       fxLayoutAlign="start"
       fxLayoutGap="10px"
     >
-      <mat-form-field>
-        <mat-label>Preset Logins</mat-label>
-        <mat-select formControlName="presetSelector">
-          <mat-option><i>(none)</i></mat-option>
-          <mat-option *ngFor='let preset of presetUsers$ | async' [value]='preset'>
-            {{ preset.username }} ({{ preset.roles }})
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <div>
+        <mat-form-field>
+          <mat-label>Preset Logins</mat-label>
+          <mat-select formControlName="presetSelector">
+            <mat-option><i>(none)</i></mat-option>
+            <mat-option *ngFor='let preset of presetUsers$ | async' [value]='preset'>
+              {{ preset.username }} ({{ preset.roles }})
+            </mat-option>
+          </mat-select>
+          <button
+            mat-button
+            matSuffix
+            mat-icon-button
+            alt="Reset Preset Users"
+            matTooltip="Reset Preset Users"
+            (click)="reset(); $event.stopPropagation()">
+            <mat-icon>undo</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
 
-      <mat-form-field>
-        <input matInput placeholder="Username" formControlName="username" />
-      </mat-form-field>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Username" formControlName="username" />
+        </mat-form-field>
+      </div>
 
-      <mat-form-field>
-        <input matInput placeholder="Password" formControlName="password" />
-      </mat-form-field>
+      <div>
+        <mat-form-field>
+          <input matInput placeholder="Password" formControlName="password" />
+        </mat-form-field>
+      </div>
     </div>
   </form>
 
@@ -53,29 +53,24 @@
       mat-raised-button
       color="primary"
       (click)="login()"
+      alt="Sign In"
+      matTooltip="Sign In"
       [disabled]="!loginForm.valid"
     >
       <mat-icon>input</mat-icon>
-      Sign In
     </button>
 
     <button
       mat-raised-button
       color="warn"
       (click)="logout()"
+      alt="Sign Out"
+      matTooltip="Sign Out"
       [disabled]="!(token$ | async)"
     >
       <mat-icon>cancel</mat-icon>
-      Sign Out
     </button>
 
-    <button
-      mat-raised-button
-      (click)="reset()"
-    >
-      <mat-icon>undo</mat-icon>
-      Reset Preset Users
-    </button>
   </mat-action-row>
 
 </mat-expansion-panel>

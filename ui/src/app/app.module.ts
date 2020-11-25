@@ -41,6 +41,7 @@ import {
   MatTabsModule,
   MatExpansionModule,
   MatGridListModule,
+  MatTooltipModule,
 } from '@angular/material';
 
 import { SharedModule } from './shared/shared.module';
@@ -89,6 +90,7 @@ import { PresetUserEffects } from '@app/store/effects/preset-user.effects';
     MatTabsModule,
     MatExpansionModule,
     MatGridListModule,
+    MatTooltipModule,
     ReactiveFormsModule,
     SharedModule,
     StoreModule.forRoot({

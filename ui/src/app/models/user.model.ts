@@ -4,6 +4,7 @@ export class User {
   firstname?: string;
   surname?: string;
   nickname?: string;
+  avatar?: string;
   isActive?: boolean;
   roles?: string[];
 }

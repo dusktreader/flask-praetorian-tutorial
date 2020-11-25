@@ -10,11 +10,13 @@ import {
   MatInputModule,
   MatListModule,
   MatProgressBarModule,
+  MatProgressSpinnerModule,
   MatSelectModule,
   MatSliderModule,
   MatExpansionModule,
   MatGridListModule,
   MatBadgeModule,
+  MatTooltipModule,
 } from '@angular/material';
 
 import { NgxJsonViewerModule } from 'ngx-json-viewer';
@@ -25,6 +27,7 @@ import { LoginComponent } from './login/login.component';
 import { MessageViewerComponent } from './message-viewer/message-viewer.component';
 import { TokenViewerComponent } from './token-viewer/token-viewer.component';
 import { EndpointListComponent } from './endpoint-list/endpoint-list.component';
+import { CurrentUserComponent } from './current-user/current-user.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,7 @@ import { EndpointListComponent } from './endpoint-list/endpoint-list.component';
     MessageViewerComponent,
     TokenViewerComponent,
     EndpointListComponent,
+    CurrentUserComponent,
   ],
   imports: [
     CommonModule,
@@ -45,11 +49,13 @@ import { EndpointListComponent } from './endpoint-list/endpoint-list.component';
     MatInputModule,
     MatListModule,
     MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatSelectModule,
     MatSliderModule,
     MatExpansionModule,
     MatGridListModule,
     MatBadgeModule,
+    MatTooltipModule,
     NgxJsonViewerModule,
     ReactiveFormsModule,
   ],
@@ -60,6 +66,7 @@ import { EndpointListComponent } from './endpoint-list/endpoint-list.component';
     LoginComponent,
     TokenViewerComponent,
     EndpointListComponent,
+    CurrentUserComponent,
   ],
 })
 export class SharedModule {}

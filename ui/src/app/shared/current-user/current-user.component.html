@@ -1,0 +1,38 @@
+<div class="smaller-title">
+  <div *ngIf="(userString$ | async) as user; else notSignedIn"
+       fxLayout="row"
+       fxLaoutAlign="right"
+       fxLayoutGap="10px">
+    <mat-icon>person</mat-icon>
+    <span>{{ user }}</span>
+    <!--Access Remaining: {{ accessRemainsHuman$ | async }}-->
+    <!--Refresh Remaining: {{ refreshRemainsHuman$ | async }}-->
+    <mat-divider [vertical]="true"></mat-divider>
+    <div>
+      <mat-icon matBadge="x"
+                matBadgeColor="accent"
+                [matBadgeHidden]="(accessRemainsPct$ | async) > 0">
+        vpn_key
+      </mat-icon>
+      Access
+      <mat-progress-bar mode="determinate"
+                        color="accent"
+                        [value]="accessRemainsPct$ | async">
+      </mat-progress-bar>
+    </div>
+    <div>
+      <mat-icon matBadge="x"
+                matBadgeColor="accent"
+                [matBadgeHidden]="(refreshRemainsPct$ | async) > 0">
+        refresh
+      </mat-icon>
+      Refresh
+      <mat-progress-bar mode="determinate"
+                        color="accent"
+                        [value]="refreshRemainsPct$ | async"></mat-progress-bar>
+    </div>
+  </div>
+  <ng-template #notSignedIn>
+    <span>Not signed in</span>
+  </ng-template>
+</div>

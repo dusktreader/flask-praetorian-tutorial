@@ -4,26 +4,31 @@
   fxLayoutAlign="center"
   fxLayoutGap="10px"
 >
-  <div>
-    <h2>Confirming user registering via email</h2>
-    <p>
-    This page uses the registration token that was sent to you via email to finalize
-    registration for the new user
-    </p>
+  <mat-card>
+    <mat-card-title>Confirming user registering via email</mat-card-title>
+    <mat-card-content>
+      <p>
+        This page uses the registration token that was sent to you via email to finalize
+        registration for the new user. The token shown here is an expiring registration
+        token that was sent in the registration email.
+      </p>
+      <p>
+        Once it is confirmed, the new user will be ready to log in. To confirm the
+        user, click the "Confirm" endpoint button below
+      </p>
 
-    <mat-card class="token-card">
-      <mat-card-header>
+      <mat-card class="token-card">
         <mat-card-title>Registration Token</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p> {{ currentToken }}
-      </mat-card-content>
-    </mat-card>
+        <mat-card-content>
+          <p> {{ currentToken }} </p>
+        </mat-card-content>
+      </mat-card>
 
-    <app-endpoint-list
-      name="confirm"
-      [endpoints]="endpoints"
-      (fire)="fire($event)">
-    </app-endpoint-list>
-  </div>
+      <app-endpoint-list
+        name="confirm"
+        [endpoints]="endpoints"
+        (fire)="fire($event)">
+      </app-endpoint-list>
+    </mat-card-content>
+  </mat-card>
 </div>

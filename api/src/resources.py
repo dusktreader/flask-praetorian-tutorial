@@ -30,6 +30,7 @@ def login():
             firstname=user.firstname,
             nickname=user.nickname,
             surname=user.surname,
+            avatar=user.avatar,
         ),
     )
 

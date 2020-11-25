@@ -4,13 +4,24 @@
   fxLayoutAlign="center"
   fxLayoutGap="10px"
 >
-  <div>
-    <h2>Restricting access with roles</h2>
-    <p>
-      This page demonstrates the use of roles to restrict access to protected
-      routes.
-    </p>
+  <mat-card>
+    <mat-card-title>Restricting access with roles</mat-card-title>
+    <mat-card-content>
+      <p>
+        This page demonstrates the use of roles to restrict access to protected
+        routes.
+      </p>
 
-    <app-endpoint-list name="roles" [endpoints]="endpoints" (fire)="fire($event)"></app-endpoint-list>
-  </div>
+      <p>
+        Each one of the preset users have different roles. The endpoints listed below
+        only allow access based on the roles caried by the auth token the user receives
+        upon login.
+      </p>
+
+      <app-endpoint-list name="roles"
+                         [endpoints]="endpoints"
+                         (fire)="fire($event)">
+      </app-endpoint-list>
+    </mat-card-content>
+  </mat-card>
 </div>

@@ -4,57 +4,57 @@
   fxLayoutAlign="center"
   fxLayoutGap="10px"
 >
-  <div>
-    <h2>Registering users via email</h2>
+  <mat-card>
+    <mat-card-title>Registering users via email</mat-card-title>
+    <mat-card-content>
+      <div *ngIf="sentRegistration$ | async; else registerFormTpl">
+        <p>
+          Now that the registration has been sent, you can check our fake email
+          service for the confirmation
+        </p>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="goToEmail()"
+          >
+          Check Email
+        </button>
+      </div>
+      <ng-template #registerFormTpl>
+        <p>
+          Fill out this form and click the "Register" endpoint button to request an email
+          registration
+        </p>
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
+          <div
+            fxLayout="column"
+            fxLayoutAlign="start"
+            fxLayoutGap="10px"
+          >
+            <div>
+              <mat-form-field>
+                <input matInput placeholder="Username" formControlName="username" />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <input matInput placeholder="Password" formControlName="password" />
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <input matInput placeholder="Email" formControlName="email" />
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </ng-template>
 
-    <div *ngIf="sentRegistration$ | async; else registerFormTpl">
-      <p>
-        Now that the registration has been sent, you can check our fake email
-        service for the confirmation
-      </p>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="goToEmail()"
-        >
-        Check Email
-      </button>
-    </div>
-    <ng-template #registerFormTpl>
-      <p>
-        Fill out this form and click the "Register" endpoint button to request an email
-        registration
-      </p>
-      <form [formGroup]="registerForm" (ngSubmit)="register()">
-        <div
-          fxLayout="row"
-          fxLayout.xs="column"
-          fxLayoutAlign="start"
-          fxLayoutGap="10px"
-        >
-          <div>
-            <mat-form-field>
-              <input matInput placeholder="Username" formControlName="username" />
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field>
-              <input matInput placeholder="Password" formControlName="password" />
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field>
-              <input matInput placeholder="Email" formControlName="email" />
-            </mat-form-field>
-          </div>
-        </div>
-      </form>
-    </ng-template>
-
-    <app-endpoint-list
-      name="register"
-      [endpoints]="endpoints"
-      (fire)="fire($event)">
-    </app-endpoint-list>
-  </div>
+      <app-endpoint-list
+        name="register"
+        [endpoints]="endpoints"
+        (fire)="fire($event)">
+      </app-endpoint-list>
+    </mat-card-content>
+  </mat-card>
 </div>

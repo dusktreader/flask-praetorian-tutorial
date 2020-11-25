@@ -1,0 +1,13 @@
+theme:
+  name: material
+site_name: "flask-praetorian tutorial"
+docs_dir: src
+markdown_extensions:
+  - attr_list
+  - admonition
+nav:
+  - Home: index.md
+  - Getting started:
+    - Tutorial webapp setup: setup.md
+  - Concepts:
+    - Basic features: basic.md

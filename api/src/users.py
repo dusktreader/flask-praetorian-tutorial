@@ -7,20 +7,22 @@ class User(db.Model):
     A generic user model that might be used by an app powered by
     flask-praetorian
     """
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.Text, unique=True)
     password = db.Column(db.Text)
     roles = db.Column(db.Text)
-    is_active = db.Column(db.Boolean, default=True, server_default='true')
+    is_active = db.Column(db.Boolean, default=True, server_default="true")
     firstname = db.Column(db.Text)
     surname = db.Column(db.Text)
     nickname = db.Column(db.Text)
+    avatar = db.Column(db.Text)
     description = db.Column(db.Text)
 
     @property
     def rolenames(self):
         try:
-            return self.roles.split(',')
+            return self.roles.split(",")
         except Exception:
             return []
 
@@ -47,13 +49,9 @@ class User(db.Model):
         with app.app_context():
             db.create_all()
             for preset_user in PRESET_USERS:
-                new_user = cls(**{
-                    k: v for (k, v)
-                    in preset_user.items()
-                    if k != 'password'
-                })
-                new_user.password = guard.hash_password(
-                    preset_user['password']
+                new_user = cls(
+                    **{k: v for (k, v) in preset_user.items() if k != "password"}
                 )
+                new_user.password = guard.hash_password(preset_user["password"])
                 db.session.add(new_user)
             db.session.commit()

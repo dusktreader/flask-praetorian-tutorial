@@ -103,7 +103,7 @@ export class LoginComponent implements OnInit {
     });
     this.userString$ = this.store.pipe(select(selectUserDisplay));
     this.titleString$ = this.userString$.pipe(
-      map( userString => userString ? `Signed in as ${userString}` : 'Sign In'),
+      map( userString => userString ? `Signed in as ${userString}` : 'Not Signed In'),
     );
 
     this.accessRemains$ = this.store.pipe(select(selectAccessRemaining));

@@ -1,4 +1,4 @@
-<mat-list>
+<mat-list class="message-list">
   <mat-list-item *ngFor="let message of (messages$ | async)?.slice().reverse()">
     <i>{{ message.timestamp.format('HH:mm:ss') }}</i>
     <p class="message-text">{{ message.text }}</p>

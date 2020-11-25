@@ -4,30 +4,41 @@
   fxLayoutAlign="center"
   fxLayoutGap="10px"
 >
-  <div>
-    <h2>Embedding custom claims in your token</h2>
-    <p>
-      This page demonstrates how custom claims can be used to include user defined
-      fields in the token. To see an example, log a user in.
-    </p>
+  <mat-card>
+    <mat-card-title>Embedding custom claims in your token</mat-card-title>
+    <mat-card-content>
+      <p>
+        This page demonstrates how custom claims can be used to include user defined
+        fields in the token. To see an example, log a user in.
+      </p>
 
-    <div *ngIf="nameParts$ | async as nameParts">
-      <mat-card>
-        <mat-card-title>{{nameParts.fullname}}</mat-card-title>
-        <mat-card-subtitle *ngIf="nameParts.nickname">"{{nameParts.nickname}}"</mat-card-subtitle>
-        <mat-card-content>
-          <span>
-            This is the currently logged in user. The user's full name is included
-            as custom claims in the token. This includes first, last, and nicknames.
-          </span>
-        </mat-card-content>
-      </mat-card>
-    </div>
+      <div *ngIf="nameParts$ | async as nameParts">
+        <mat-card class="custom-card">
+          <mat-card-header>
+            <img mat-card-avatar *ngIf="avatarLink$ | async" [src]="avatarLink$ | async">
+            <mat-card-title>{{nameParts.fullname}}</mat-card-title>
+            <mat-card-subtitle>{{ nameParts.nickname || '(no nickname)' }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              This is the currently logged in user. The details in this card are
+              driven by the custom claims included in the auth token. These include:
+            </p>
+            <ul>
+              <li>First Name</li>
+              <li>Surname</li>
+              <li>Nickname</li>
+              <li>Avatar URL</li>
+            </ul>
+          </mat-card-content>
+        </mat-card>
+      </div>
 
-    <app-endpoint-list
-      name="custom-claims"
-      [endpoints]="endpoints"
-      (fire)="fire($event)">
-    </app-endpoint-list>
-  </div>
+      <app-endpoint-list
+        name="custom-claims"
+        [endpoints]="endpoints"
+        (fire)="fire($event)">
+      </app-endpoint-list>
+    </mat-card-content>
+  </mat-card>
 </div>

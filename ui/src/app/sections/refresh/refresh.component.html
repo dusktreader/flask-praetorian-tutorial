@@ -4,13 +4,17 @@
   fxLayoutAlign="center"
   fxLayoutGap="10px"
 >
-  <div>
-    <h2>Refreshing access-expired tokens</h2>
-    <p>
-      This page demonstrates how tokens with their access lifespan expired may
-      be refreshed
-    </p>
-
-    <app-endpoint-list name="refresh" [endpoints]="endpoints" (fire)="fire($event)"></app-endpoint-list>
-  </div>
+  <mat-card>
+    <mat-card-title>Refreshing access-expired tokens</mat-card-title>
+    <mat-card-content>
+      <p>
+        This page demonstrates how tokens with their access lifespan expired may
+        be refreshed
+      </p>
+      <app-endpoint-list name="refresh"
+                         [endpoints]="endpoints"
+                         (fire)="fire($event)">
+      </app-endpoint-list>
+    </mat-card-content>
+  </mat-card>
 </div>

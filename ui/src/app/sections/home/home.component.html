@@ -8,8 +8,63 @@
     <mat-card>
       <mat-card-title>Welcome to the flask-praetorian tutorial</mat-card-title>
       <mat-card-content>
-        This app will demonstrate the use of flask-praetorian in adding security
-        to a flask-based API
+        <p>
+          This app demonstrates the use of flask-praetorian in adding security
+          to a flask-based API
+        </p>
+
+        <p>
+          The different capabilities of flask-praetorian are exercised in the
+          sections found in the navigation menu (on the left)
+        </p>
+
+        <p>
+          At the top-right (in the title bar) is an indicator showing information
+          about the currently signed in user. When the user is signed in, there will
+          be two count-down indicators showing how long the current auth token has
+          remaining with access and refresh permissions.
+        </p>
+
+        <p>
+          At the bottom of this app are 4 tabs which show various information about
+          the requests being dispatched to the api:
+        </p>
+
+        <mat-list>
+          <mat-list-item>
+            <h4 matLine><u>Messages</u></h4>
+            <p matLine>
+              This tab shows messges from this angular app. They are
+              shown with the most recent at the top. These messages are only to give
+              the user a better idea of what this app is doing
+            </p>
+          </mat-list-item>
+          <mat-list-item>
+            <h4 matLine><u>JWT Token</u></h4>
+            <p matLine>
+              This tab shows what the current authorization token
+              looks like. It shows all of the claims that are embedded as well as the
+              raw data contained in the token
+            </p>
+          </mat-list-item>
+          <mat-list-item>
+            <h4 matLine><u>Request</u></h4>
+            <p matLine>
+              This tab shows what the requests being dispatched to the
+              API look like. This is especially useful here for seeing how the auth
+              tokens are passed down.
+            </p>
+          </mat-list-item>
+          <mat-list-item>
+            <h4 matLine><u>Response</u></h4>
+            <p matLine>
+              This tab shows what the response from the API looks
+              like. It will show the response payload as well as errors. This is useful
+              if you would like to see why a request was rejected as it will show the
+              error codes and messages from the API
+            </p>
+          </mat-list-item>
+        </mat-list>
       </mat-card-content>
     </mat-card>
   </div>

@@ -21,6 +21,7 @@ import {
 export class CustomClaimsComponent implements OnInit {
   endpoints: Array<IEndpoint>;
   nameParts$: Observable<any>;
+  avatarLink$: Observable<string>;
 
   constructor(private store: Store<IAppState>) {}
 
@@ -32,6 +33,10 @@ export class CustomClaimsComponent implements OnInit {
         fullname: `${tokenData.firstname} ${tokenData.surname}`,
         nickname: tokenData.nickname,
       })),
+    );
+    this.avatarLink$ = this.store.pipe(
+      select(selectTokenData),
+      map(tokenData => tokenData.avatar),
     );
     this.endpoints = [
       {

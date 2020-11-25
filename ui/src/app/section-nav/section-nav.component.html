@@ -7,21 +7,34 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
   >
-    <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="" [routerLink]="['/home']">Home</a>
-      <a mat-list-item href="" [routerLink]="['/roles']">Role Restrictions</a>
-      <a mat-list-item href="" [routerLink]="['/refresh']">Refreshing Tokens</a>
-      <a mat-list-item href="" [routerLink]="['/blacklist']"
-        >Blacklisting Tokens</a
-      >
-      <a mat-list-item href="" [routerLink]="['/custom-claims']"
-        >Custom Claims</a
-      >
-      <a mat-list-item href="" [routerLink]="['/register']"
-        >Email Registration</a
-      >
+      <a mat-list-item href="" [routerLink]="['/home']">
+        <mat-icon mat-list-icon>home</mat-icon>
+        Home
+      </a>
+      <mat-divider></mat-divider>
+      <a mat-list-item href="" [routerLink]="['/roles']">
+        <mat-icon mat-list-icon>rule</mat-icon>
+        Role Restrictions
+      </a>
+      <a mat-list-item href="" [routerLink]="['/refresh']">
+        <mat-icon mat-list-icon>refresh</mat-icon>
+        Refreshing Tokens
+      </a>
+      <a mat-list-item href="" [routerLink]="['/blacklist']">
+        <mat-icon mat-list-icon>cancel</mat-icon>
+        Blacklisting Tokens
+      </a>
+      <a mat-list-item href="" [routerLink]="['/custom-claims']">
+        <mat-icon mat-list-icon>build_circle</mat-icon>
+        Custom Claims
+      </a>
+      <a mat-list-item href="" [routerLink]="['/register']">
+        <mat-icon mat-list-icon>email</mat-icon>
+        Email Registration
+      </a>
     </mat-nav-list>
+    <app-login></app-login>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -34,10 +47,11 @@
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>{{ title$ | async }}</span>
+      <span>{{ title$ | async }} </span>
+      <span class="toolbar-spacer"></span>
+      <app-current-user></app-current-user>
     </mat-toolbar>
 
-    <app-login></app-login>
     <router-outlet></router-outlet>
     <mat-tab-group>
       <mat-tab label="Messages">
