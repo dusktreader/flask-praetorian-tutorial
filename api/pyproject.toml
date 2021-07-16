@@ -10,8 +10,9 @@ flask-cors = "^3.0"
 flask-sqlalchemy = "^2.4"
 pendulum = "^2.0"
 # flask-praetorian = {version = "1.1.0a3", allow-prereleases = true}
-flask-praetorian = { file = "/flask-praetorian-1.1.0a3.tar.gz" }
+# flask-praetorian = { file = "/flask-praetorian-1.1.0a3.tar.gz" }
 
+flask-praetorian = {path = "../../flask-praetorian"}
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
 
