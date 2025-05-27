@@ -2,6 +2,7 @@ PRESET_USERS = [
     dict(
         username="TheDude",
         password="abides",
+        email="the_dude@elduderino.com",
         firstname="Jeffrey",
         nickname="The Dude",
         surname="Lebowski",
@@ -10,6 +11,7 @@ PRESET_USERS = [
     dict(
         username="Walter",
         password="calmerthanyouare",
+        email="walter@sobchaksecurity.com",
         roles="admin",
         firstname="Walter",
         surname="Sobchak",
@@ -18,6 +20,7 @@ PRESET_USERS = [
     dict(
         username="Donnie",
         password="iamthewalrus",
+        email="donnie@surflajolla.com",
         roles="operator",
         firstname="Theodore",
         nickname="Donny",
@@ -27,6 +30,7 @@ PRESET_USERS = [
     dict(
         username="Maude",
         password="andthorough",
+        email="maude@femme-art-collective.com",
         roles="operator,admin",
         firstname="Maude",
         nickname="Mauddie",

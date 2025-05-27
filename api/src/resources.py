@@ -208,21 +208,70 @@ def finalize():
     registration email
 
     .. example::
-       $ curl http://localhost:5000/finalize -X GET \
+       $ curl http://localhost:5000/finalize?token=<your_token> -X GET \
          -H "Authorization: Bearer <your_token>"
     """
     logger = flask.current_app.logger
     logger.debug(f"Attempting to finalize registration")
-    logger.debug(f"Fetching token from header")
-    try:
-        registration_token = guard.read_token_from_header()
-    except Exception as err:
-        logger.error(f"Couldn't extract token from header: {str(err)}")
-        raise
+    logger.debug(f"Fetching token from request params")
+    registration_token = flask.request.args.get("token")
     logger.debug(f"Retrieved token {registration_token}")
     user = guard.get_user_from_registration_token(registration_token)
     # perform 'activation' of user here...like setting 'active' or something
     logger.debug(f"Registered user {user}")
+    ret = {"access_token": guard.encode_jwt_token(user)}
+    return flask.jsonify(ret), 200
+
+
+def reset():
+    """
+    Initializes the password reset workflow for a user by parsing a POST request
+    containing the user info and dispatching an email with a reset token
+
+    .. example::
+       $ curl http://localhost:5000/reset -X POST \
+         -d '{"username":"Walter","email":"calmerthanyouare"}'
+    """
+    logger = flask.current_app.logger
+    req = flask.request.get_json(force=True)
+    username = req.get("username", None)
+    logger.debug("Beginning reset process for:")
+    logger.debug(f"  {username}")
+    usr = User.query.filter_by(username=req.get("username", None)).one()
+    try:
+        guard.send_reset_email(usr.email, usr)
+    except Exception as err:
+        logger.error(f"Couldn't send reset email: {err}")
+        raise
+    ret = {
+        "message": "successfully sent reset email to user {}".format(
+            username
+        )
+    }
+    return flask.jsonify(ret)
+
+
+
+def finalize_reset():
+    """
+    Finalizes a password reset using the reset token issued to the user via email.
+
+    .. example::
+       $ curl http://localhost:5000/finalize-reset?token=<your_token> -X GET \
+         -H "Authorization: Bearer <your_token>"
+    """
+    logger = flask.current_app.logger
+    logger.debug(f"Attempting to finalize password reset")
+    logger.debug(f"Fetching token from request params")
+    reset_token = flask.request.args.get("token")
+    logger.debug(f"Retrieved token {reset_token}")
+    user = guard.validate_reset_token(reset_token)
+    new_password = "a-very-random-password"
+    hashed_password = guard.hash_password(new_password)
+    user.password = hashed_password
+    db.session.commit()
+
+    logger.debug(f"Reset password for {user.username} to {new_password}")
     ret = {"access_token": guard.encode_jwt_token(user)}
     return flask.jsonify(ret), 200
 
@@ -267,6 +316,16 @@ def register_routes(app):
     app.add_url_rule(
         "/finalize",
         view_func=finalize,
+        methods=["GET"],
+    )
+    app.add_url_rule(
+        "/reset",
+        view_func=reset,
+        methods=["POST"],
+    )
+    app.add_url_rule(
+        "/finalize-reset",
+        view_func=finalize_reset,
         methods=["GET"],
     )
     app.add_url_rule(

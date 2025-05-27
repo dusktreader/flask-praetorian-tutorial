@@ -1,0 +1,22 @@
+FROM python:3.12-bookworm
+
+ARG port
+ARG service
+
+RUN pip install --upgrade pip -q
+RUN pip install poetry -q
+RUN poetry config virtualenvs.create false
+
+RUN mkdir /logs
+
+RUN mkdir /app
+WORKDIR /app
+COPY pyproject.toml /app/pyproject.toml
+COPY poetry.lock /app/poetry.lock
+COPY ./entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+RUN echo check
+
+VOLUME /flask-praetorian
+
+ENTRYPOINT /app/entrypoint.sh

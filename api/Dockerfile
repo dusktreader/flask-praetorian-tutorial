@@ -11,8 +11,7 @@ RUN mkdir /logs
 
 RUN mkdir /app
 WORKDIR /app
-#COPY poetry.lock /app/poetry.lock
-COPY flask-praetorian-1.1.0a3.tar.gz /
+COPY poetry.lock /app/poetry.lock
 COPY pyproject.toml /app/pyproject.toml
 RUN poetry install
 

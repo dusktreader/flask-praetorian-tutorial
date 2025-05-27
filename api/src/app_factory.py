@@ -23,6 +23,9 @@ def create_app(*args, **kwargs):
     fetch_env(app, "PRAETORIAN_CONFIRMATION_SENDER")
     fetch_env(app, "PRAETORIAN_CONFIRMATION_SUBJECT")
     fetch_env(app, "PRAETORIAN_CONFIRMATION_URI")
+    fetch_env(app, "PRAETORIAN_RESET_SENDER")
+    fetch_env(app, "PRAETORIAN_RESET_SUBJECT")
+    fetch_env(app, "PRAETORIAN_RESET_URI")
     fetch_env(app, "MAIL_SERVER")
     fetch_env(app, "EXAMPLE")
 
